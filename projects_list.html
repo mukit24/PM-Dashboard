@@ -114,6 +114,10 @@
             background: #8b5cf6;
         }
 
+        .badge-skyblue {
+            background: #48a0c0;
+        }
+
         .project-count {
             font-size: 0.9rem;
             font-weight: 600;
@@ -216,6 +220,10 @@
 
         .status-blue {
             background: #3b82b6;
+        }
+
+        .status-skyblue {
+            background: #7ad9ff;
         }
 
         .view-btn {
@@ -346,8 +354,7 @@
                         <th>Sector</th>
                         <th>Ministry</th>
                         <th>Estimated Cost</th>
-                        <th>Completion</th>
-                        <th>Action</th>
+                        <th>Completion Percentage</th>
                     </tr>
                 </thead>
 
@@ -389,17 +396,17 @@
         // STAGE METADATA CONFIG
         // =========================
         const stageMetadata = {
-            "0-30%": { count: 250, desc: "Early stage - Planning & initial implementation" },
-            "30-60%": { count: 400, desc: "Mid stage - Active implementation" },
-            "60-80%": { count: 450, desc: "Advanced stage - Nearing completion" },
-            "80-100%": { count: 250, desc: "Final stage - Handover & closure" }
+            "0-30%": { count: 162, desc: "Early stage - Planning & initial implementation" },
+            "30-60%": { count: 540, desc: "Mid stage - Active implementation" },
+            "60-80%": { count: 556, desc: "Advanced stage - Nearing completion" },
+            "80-100%": { count: 92, desc: "Final stage - Handover & closure" }
         };
 
         const typeMetadata = {
-            "DPP": { count: 520, desc: "Development Projects" },
-            "TAPP": { count: 380, desc: "Technical Assistance Projects" },
-            "Feasibility": { count: 270, desc: "Feasibility Study Projects" },
-            "Own Fund": { count: 180, desc: "Own Funded Projects" }
+            "DPP": { count: 1141, desc: "Development Projects" },
+            "TAPP": { count: 121, desc: "Technical Assistance Projects" },
+            "Feasibility": { count: 22, desc: "Feasibility Study Projects" },
+            "Own Fund": { count: 66, desc: "Own Funded Projects" }
         };
 
         const sectorMetadata = {
@@ -407,7 +414,7 @@
             "Education": { count: 3, desc: "Education Sector" },
             "Health": { count: 4, desc: "Health Sector" },
             "Transport": { count: 9, desc: "Transport Sector" },
-            "Energy": { count: 12, desc: "Energy Sector" }
+            "Power and Energy": { count: 12, desc: "Power and Energy Sector" }
         };
 
         // =========================
@@ -416,38 +423,320 @@
 
         const allProjects = [
             // ==========================================
-            // 0-30% Completion: Early Stage (10 Projects)
+            // 1. DPP PROJECTS (10 Projects)
             // ==========================================
             {
-                name: "Smart City Master Plan",
-                sector: "Infrastructure",
-                ministry: "Local Government",
-                estimatedCost: "12,500 Cr",
+                name: "Jet A-1 Pipeline from Pitolganj (Near Kanchan Bridge) to Kurmitola Aviation Depot (KAD) including Pumping Facilities (Second Phase)",
+                sector: "Power and Energy",
+                ministry: "Ministry of Power, Energy and Mineral Resources",
+                estimatedCost: "42,000 Cr",
                 completion: "18%",
                 range: "0-30%",
-                pdName: "Engr. MD. Rafiqul Islam",
+                pdName: "Mohammed Kafilus Sattar",
                 projectType: "DPP"
             },
             {
-                name: "Coastal Protection Study",
-                sector: "Infrastructure",
-                ministry: "Water Resources",
-                estimatedCost: "4,800 Cr",
+                name: "‘Socioeconomic Status and Poverty Situation Survey of Small Ethnic Group 2025’ Project",
+                sector: "Health",
+                ministry: "Ministry of Planning",
+                estimatedCost: "2,874 Cr",
+                completion: "30%",
+                range: "0-30%",
+                pdName: "MD. JAHANGIR ALAM",
+                projectType: "DPP"
+            },
+            {
+                name: "Waterlogging relief through excavation/re-excavation of Nawab Khal, Nayagola Khal and Railway Borrow pit in the municipal area of Chapainawabganj district",
+                sector: "Environment, Climate Change (CC) and Water Resources (WR)",
+                ministry: "Ministry of Water Resources",
+                estimatedCost: "4,864.7 Cr",
+                completion: "19%",
+                range: "0-30%",
+                pdName: "S M Ahsan Habib",
+                projectType: "DPP"
+            },
+            {
+                name: "Out of Country Voting System Development & Implementation (OCV-SDI)",
+                sector: "General Public Services",
+                ministry: "Bangladesh Election Commission Secretariat",
+                estimatedCost: "4,943.56 Cr",
+                completion: "45%",
+                range: "30-60%",
+                pdName: "K.M Ali Newaz",
+                projectType: "DPP"
+            },
+            {
+                name: "Development of effective vaccines against freshwater fish diseases.",
+                sector: "Agriculture",
+                ministry: "Ministry of Fisheries and Livestock",
+                estimatedCost: "4,351.15 Cr",
+                completion: "38%",
+                range: "30-60%",
+                pdName: "Md. Shirajum Monir",
+                projectType: "DPP"
+            },
+            {
+                name: "Rural Sanitation Project",
+                sector: "Housing and Community Amenities",
+                ministry: "Ministry of Local Government, Rural Development and Co-operatives",
+                estimatedCost: "198,982.36 Cr",
+                completion: "47%",
+                range: "30-60%",
+                pdName: "MOHAMMAD TABIBUR RAHMAN TALUKDER",
+                projectType: "DPP"
+            },
+            {
+                name: "Further Development of University of Dhaka",
+                sector: "Education",
+                ministry: "Ministry of Education",
+                estimatedCost: "284039.00 Cr",
+                completion: "72%",
+                range: "60-80%",
+                pdName: "MOHAMMAD ZABED ALAM MRIDHA",
+                projectType: "DPP"
+            },
+            {
+                name: "Infrastructure development project in the Talna area adjacent to 300 feet Purbachal Road in Ward 43 under the Dhaka North City Corporation",
+                sector: "Local Government and Rural Development",
+                ministry: "Ministry of Local Government, Rural Development and Co-operatives",
+                estimatedCost: "4,950.62 Cr",
+                completion: "68%",
+                range: "60-80%",
+                pdName: "Md. Saifuddin  Manik",
+                projectType: "DPP"
+            },
+            {
+                name: "Preparation of strategic plan for Munshiganj District",
+                sector: "Housing and Community Amenities",
+                ministry: "Ministry of Housing and Public Works",
+                estimatedCost: "28.81 Cr",
+                completion: "76%",
+                range: "60-80%",
+                pdName: "Maqsud Hashem",
+                projectType: "DPP"
+            },
+            {
+                name: "Sustainable Agricultural Development through Extension of Modern Technologies in Rangpur Region Project (SDRnP)",
+                sector: "Agriculture",
+                ministry: "Ministry of Agriculture",
+                estimatedCost: "14,299.57 Cr",
+                completion: "92%",
+                range: "80-100%",
+                pdName: "SK. ABDULLAH WAHED",
+                projectType: "DPP"
+            },
+
+            // ==========================================
+            // 2. TAPP PROJECTS (10 Projects)
+            // ==========================================
+            {
+                name: "Strengthening capacity of MoEFCC, DoE and BFD for natural resource management and improved climate resilience",
+                sector: "Environment, Climate Change (CC) and Water Resources (WR)",
+                ministry: "Ministry of Environment, Forest and Climate Change",
+                estimatedCost: "645 Cr",
                 completion: "22%",
                 range: "0-30%",
-                pdName: "Dr. Tanzina Ahmed",
+                pdName: "FAHMIDA HOQUE KHAN",
                 projectType: "TAPP"
             },
             {
-                name: "Digital Infrastructure Blueprint",
-                sector: "Infrastructure",
-                ministry: "ICT Division",
-                estimatedCost: "8,000 Cr",
+                name: "Procurement Modernization to Improve Public Service Delivery (PMIPSD)",
+                sector: "General Public Services",
+                ministry: "Ministry of Planning",
+                estimatedCost: "55,196.6 Cr",
+                completion: "15%",
+                range: "0-30%",
+                pdName: "S. M. Moin Uddin Ahmed",
+                projectType: "TAPP"
+            },
+            {
+                name: "Statistical Capacity Enhancement and Modernization Project (SCEMP)",
+                sector: "General Public Services",
+                ministry: "Ministry of Planning",
+                estimatedCost: "109,640 Cr",
+                completion: "5%",
+                range: "0-30%",
+                pdName: "Mohammad Fazla Azim",
+                projectType: "TAPP"
+            },
+            {
+                name: "Strengthening SBCC Delivery System in Nutrition Sensitive Social Protection",
+                sector: "Social Protection",
+                ministry: "Cabinet Division",
+                estimatedCost: "135.2 Cr",
+                completion: "55%",
+                range: "30-60%",
+                pdName: "Sarwar Kamal",
+                projectType: "TAPP"
+            },
+            {
+                name: "Enhancement & Strengthening of Drilling Capability of Geological Survey of Bangladesh (ESDC-GSB)",
+                sector: "Power and Energy",
+                ministry: "Ministry of Power, Energy and Mineral Resources",
+                estimatedCost: "11,277.67 Cr",
+                completion: "48%",
+                range: "30-60%",
+                pdName: "Md. Mohirul Islam",
+                projectType: "TAPP"
+            },
+            {
+                name: "Technical Assistance for Green Railway Transport Project Preparation Facility.",
+                sector: "Transport and Communication",
+                ministry: "Ministry of Railways",
+                estimatedCost: "9,351.12 Cr",
+                completion: "50%",
+                range: "30-60%",
+                pdName: "Md. Arman Hossain",
+                projectType: "TAPP"
+            },
+            {
+                name: "Prevention of Violence and Harmful Practices against (PVHP) Children and Women in Bangladesh",
+                sector: "Social Protection",
+                ministry: "Ministry of Women and Childrens' Affairs",
+                estimatedCost: "17,034.46 Cr",
+                completion: "78%",
+                range: "60-80%",
+                pdName: "Shamima Nasrin",
+                projectType: "TAPP"
+            },
+            {
+                name: "Project for ICT Engineers Development for the Promotion of ICT Industry and New Innovations",
+                sector: "Science and IT",
+                ministry: "Ministry of Posts, Telecommunications and Information Technology",
+                estimatedCost: "2,681 Cr",
+                completion: "79%",
+                range: "60-80%",
+                pdName: "MD. GOLAM SARWAR",
+                projectType: "TAPP"
+            },
+            {
+                name: "Aquatic Ecosystem Conservation and Management in the North-East and South-West Region of Bangladesh-USAID Ecosystems/Protibesh (DoF Component)",
+                sector: "Agriculture",
+                ministry: "Ministry of Fisheries and Livestock",
+                estimatedCost: "2,231.14 Cr",
+                completion: "66%",
+                range: "60-80%",
+                pdName: "MD. SALMON HASAN BIPLOB",
+                projectType: "TAPP"
+            },
+            {
+                name: "Aquifer Mapping Preparation and Water Stress Area Assessment in 13 Districts of the North-West Hydrological Regions of Bangladesh",
+                sector: "Environment, Climate Change (CC) and Water Resources (WR)",
+                ministry: "Ministry of Water Resources",
+                estimatedCost: "4,570 Cr",
+                completion: "88%",
+                range: "80-100%",
+                pdName: "Kazi Saidur Rahman",
+                projectType: "TAPP"
+            },
+
+            // ==========================================
+            // 3. FEASIBILITY STUDY PROJECTS (10 Projects)
+            // ==========================================
+            {
+                name: "Feasibility Study for the Project of Enhancement of Physical Infrastructure and Research Facilities of Mawlana Bhashani Science and Technology University",
+                sector: "Education",
+                ministry: "Ministry of Education",
+                estimatedCost: "285 Cr",
                 completion: "28%",
                 range: "0-30%",
-                pdName: "Mustafa Zaman",
+                pdName: "MOHAMMAD FARUK HOSSAIN",
                 projectType: "Feasibility"
             },
+            {
+                name: "Feasibility Study & Detail Design for Improvement of Drainage System by Relocating the Drainage Outfall Locations of Chapai Nawabganj Municipality.",
+                sector: "General Public Services",
+                ministry: "Ministry of Local Government, Rural Development and Co-operatives",
+                estimatedCost: "122 Cr",
+                completion: "8%",
+                range: "0-30%",
+                pdName: "Md. Golam Mowla",
+                projectType: "Feasibility"
+            },
+            {
+                name: "Feasibility Study of Development Projects to be Adopted by Department of Fisheries project (Phase-II) (1st Revised)",
+                sector: "Agriculture",
+                ministry: "Ministry of Fisheries and Livestock",
+                estimatedCost: "345 Cr",
+                completion: "52%",
+                range: "30-60%",
+                pdName: "Mohd. Yousuf Ali",
+                projectType: "Feasibility"
+            },
+            {
+                name: "Feasibility Study for Modernization & Product Diversification of North Bengal Sugar Mills Ltd.",
+                sector: "Industrial and Economic Services",
+                ministry: "Ministry of Industry",
+                estimatedCost: "498 Cr",
+                completion: "59%",
+                range: "30-60%",
+                pdName: "Md. Omar Faruk",
+                projectType: "Feasibility"
+            },
+            {
+                name: "Feasibility Study on Livestock Service Transformation (LST) Project",
+                sector: "Agriculture",
+                ministry: "Ministry of Fisheries and Livestock",
+                estimatedCost: "473 Cr",
+                completion: "65%",
+                range: "60-80%",
+                pdName: "Rezaul Huq Khan",
+                projectType: "Feasibility"
+            },
+            {
+                name: "Preparation of Master Plan (Structural Plan, Urban Area Plan, Detail Area Plan) for Extended Area of Sylhet City Corporation.",
+                sector: "Housing and Community Amenities",
+                ministry: "Ministry of Local Government, Rural Development and Co-operatives",
+                estimatedCost: "450 Cr",
+                completion: "63%",
+                range: "60-80%",
+                pdName: "Nur Azizur Rahman",
+                projectType: "Feasibility"
+            },
+            {
+                name: "Study on Livelihood and Integrated Management of Land and Water Resources in Chalan Beel Area with a View to Restoring Chalan Beel",
+                sector: "Environment, Climate Change (CC) and Water Resources (WR)",
+                ministry: "Ministry of Water Resources",
+                estimatedCost: "1,301.8 Cr",
+                completion: "95%",
+                range: "80-100%",
+                pdName: "Muhammad Tanvirul Huq",
+                projectType: "Feasibility"
+            },
+            {
+                name: "2D Seismic Survey over Exploration Block 7 & 9",
+                sector: "Power and Energy",
+                ministry: "Ministry of Power, Energy and Mineral Resources",
+                estimatedCost: "30,039 Cr",
+                completion: "86%",
+                range: "80-100%",
+                pdName: "MOHAMMAD RAFIQUL ISLAM",
+                projectType: "Feasibility"
+            },
+            {
+                name: "Feasibility Study for Basin-wise Water Resources Management Project of Rivers in Barisal Zone",
+                sector: "Environment, Climate Change (CC) and Water Resources (WR)",
+                ministry: "Ministry of Water Resources",
+                estimatedCost: "999 Cr",
+                completion: "94%",
+                range: "80-100%",
+                pdName: "M. Abdur Rakib",
+                projectType: "Feasibility"
+            },
+            {
+                name: "Feasibility Study for Updating Previous Study of North Rajshahi Irrigation Project and Rehabilitation of Low Lift Pump Irrigation Projects in Dinajpur, Thakurgaon and Panchagarh District.",
+                sector: "Agriculture",
+                ministry: "Ministry of Water Resources",
+                estimatedCost: "968.8 Cr",
+                completion: "89%",
+                range: "80-100%",
+                pdName: "Md. Khairul Islam",
+                projectType: "Feasibility"
+            },
+
+            // ==========================================
+            // 4. OWN FUND PROJECTS (10 Projects)
+            // ==========================================
             {
                 name: "Railway Feasibility",
                 sector: "Transport",
@@ -459,98 +748,14 @@
                 projectType: "Own Fund"
             },
             {
-                name: "Urban Development Framework",
-                sector: "Infrastructure",
-                ministry: "Housing",
-                estimatedCost: "5,700 Cr",
-                completion: "30%",
-                range: "0-30%",
-                pdName: "Sultana Razia",
-                projectType: "DPP"
-            },
-            {
-                name: "Water Treatment Design",
-                sector: "Infrastructure",
-                ministry: "Local Government",
-                estimatedCost: "7,200 Cr",
-                completion: "15%",
-                range: "0-30%",
-                pdName: "Engr. Hasan Ali",
-                projectType: "TAPP"
-            },
-            {
-                name: "Renewable Energy Roadmap",
-                sector: "Energy",
-                ministry: "Power Division",
-                estimatedCost: "9,000 Cr",
-                completion: "8%",
-                range: "0-30%",
-                pdName: "Farhana Yasmin",
-                projectType: "Feasibility"
-            },
-            {
                 name: "Agricultural Tech Initiative",
-                sector: "Energy",
+                sector: "Power and Energy",
                 ministry: "Agriculture",
                 estimatedCost: "3,100 Cr",
                 completion: "25%",
                 range: "0-30%",
                 pdName: "Dr. Ahsan Ullah",
                 projectType: "Own Fund"
-            },
-            {
-                name: "E-Governance Portal Upgrade",
-                sector: "Infrastructure",
-                ministry: "ICT Division",
-                estimatedCost: "1,500 Cr",
-                completion: "19%",
-                range: "0-30%",
-                pdName: "Nusrat Jahan",
-                projectType: "DPP"
-            },
-            {
-                name: "Sewerage Network Planning",
-                sector: "Infrastructure",
-                ministry: "Local Government",
-                estimatedCost: "4,200 Cr",
-                completion: "5%",
-                range: "0-30%",
-                pdName: "Engr. Tariqul Islam",
-                projectType: "TAPP"
-            },
-
-            // ==========================================
-            // 30-60% Completion: Mid Stage (10 Projects)
-            // ==========================================
-            {
-                name: "Metro Rail Phase 2",
-                sector: "Transport",
-                ministry: "Road Transport",
-                estimatedCost: "24,000 Cr",
-                completion: "45%",
-                range: "30-60%",
-                pdName: "M. A. N. Siddique",
-                projectType: "DPP"
-            },
-            {
-                name: "Rural Electrification",
-                sector: "Energy",
-                ministry: "Power Division",
-                estimatedCost: "10,000 Cr",
-                completion: "55%",
-                range: "30-60%",
-                pdName: "Md. Helal Uddin",
-                projectType: "TAPP"
-            },
-            {
-                name: "School Digitalization",
-                sector: "Education",
-                ministry: "Education",
-                estimatedCost: "3,500 Cr",
-                completion: "52%",
-                range: "30-60%",
-                pdName: "Prof. Shaheen Mahmud",
-                projectType: "Feasibility"
             },
             {
                 name: "Highway Expansion Phase 2",
@@ -563,36 +768,6 @@
                 projectType: "Own Fund"
             },
             {
-                name: "Healthcare Equipment Rollout",
-                sector: "Health",
-                ministry: "Health",
-                estimatedCost: "6,200 Cr",
-                completion: "38%",
-                range: "30-60%",
-                pdName: "Dr. M. A. Faiz",
-                projectType: "DPP"
-            },
-            {
-                name: "Bridge Construction Mid-phase",
-                sector: "Infrastructure",
-                ministry: "Road Transport",
-                estimatedCost: "8,900 Cr",
-                completion: "48%",
-                range: "30-60%",
-                pdName: "Engr. Quazi Shahriar",
-                projectType: "TAPP"
-            },
-            {
-                name: "Irrigation Canal Development",
-                sector: "Energy",
-                ministry: "Water Resources",
-                estimatedCost: "5,100 Cr",
-                completion: "59%",
-                range: "30-60%",
-                pdName: "Md. Sarafat Hossain",
-                projectType: "Feasibility"
-            },
-            {
                 name: "District Data Centers",
                 sector: "Transport",
                 ministry: "ICT Division",
@@ -601,60 +776,6 @@
                 range: "30-60%",
                 pdName: "Saiful Islam",
                 projectType: "Own Fund"
-            },
-            {
-                name: "Secondary Schools Renovation",
-                sector: "Education",
-                ministry: "Education",
-                estimatedCost: "2,800 Cr",
-                completion: "47%",
-                range: "30-60%",
-                pdName: "Zeenat Rahman",
-                projectType: "DPP"
-            },
-            {
-                name: "Submersible Road Construction",
-                sector: "Infrastructure",
-                ministry: "Local Government",
-                estimatedCost: "3,900 Cr",
-                completion: "50%",
-                range: "30-60%",
-                pdName: "Engr. Monirul Zaman",
-                projectType: "TAPP"
-            },
-
-            // ==========================================
-            // 60-80% Completion: Advanced Stage (10 Projects)
-            // ==========================================
-            {
-                name: "Power Grid Modernization",
-                sector: "Energy",
-                ministry: "Power Division",
-                estimatedCost: "16,500 Cr",
-                completion: "72%",
-                range: "60-80%",
-                pdName: "Md. Shafiullah",
-                projectType: "DPP"
-            },
-            {
-                name: "Port Expansion Project",
-                sector: "Transport",
-                ministry: "Shipping",
-                estimatedCost: "11,000 Cr",
-                completion: "78%",
-                range: "60-80%",
-                pdName: "Rear Admiral Mohammad Sohail",
-                projectType: "TAPP"
-            },
-            {
-                name: "Metro Rail Phase 1",
-                sector: "Transport",
-                ministry: "Road Transport",
-                estimatedCost: "22,000 Cr",
-                completion: "65%",
-                range: "60-80%",
-                pdName: "M. A. N. Siddique",
-                projectType: "Feasibility"
             },
             {
                 name: "Hospital Infrastructure Upgrade",
@@ -667,38 +788,8 @@
                 projectType: "Own Fund"
             },
             {
-                name: "University Campus Development",
-                sector: "Education",
-                ministry: "Education",
-                estimatedCost: "7,800 Cr",
-                completion: "68%",
-                range: "60-80%",
-                pdName: "Prof. Dr. M. Lutfar Rahman",
-                projectType: "DPP"
-            },
-            {
-                name: "Telecom Network Enhancement",
-                sector: "Transport",
-                ministry: "ICT Division",
-                estimatedCost: "5,500 Cr",
-                completion: "79%",
-                range: "60-80%",
-                pdName: "Rashedul Hasan",
-                projectType: "TAPP"
-            },
-            {
-                name: "Industrial Zone Expressway",
-                sector: "Transport",
-                ministry: "Road Transport",
-                estimatedCost: "14,200 Cr",
-                completion: "63%",
-                range: "60-80%",
-                pdName: "Engr. Mahbubur Rahman",
-                projectType: "Feasibility"
-            },
-            {
                 name: "Cross-Country Gas Pipeline",
-                sector: "Energy",
+                sector: "Power and Energy",
                 ministry: "Power Division",
                 estimatedCost: "12,100 Cr",
                 completion: "71%",
@@ -707,67 +798,23 @@
                 projectType: "Own Fund"
             },
             {
-                name: "Embankment Rehabilitation",
-                sector: "Infrastructure",
-                ministry: "Water Resources",
-                estimatedCost: "6,400 Cr",
-                completion: "76%",
-                range: "60-80%",
-                pdName: "Md. Nurul Amin",
-                projectType: "DPP"
-            },
-            {
-                name: "High-Tech Park Phase 1",
-                sector: "Transport",
-                ministry: "ICT Division",
-                estimatedCost: "8,700 Cr",
-                completion: "66%",
-                range: "60-80%",
-                pdName: "A.N.M. Shafiqul Islam",
-                projectType: "TAPP"
-            },
-
-            // ==========================================
-            // 80-100% Completion: Final Stage (10 Projects)
-            // ==========================================
-            {
-                name: "Water Supply Scheme",
-                sector: "Health",
-                ministry: "Health",
-                estimatedCost: "2,500 Cr",
-                completion: "92%",
-                range: "80-100%",
-                pdName: "Engr. AKM Shahid Uddin",
-                projectType: "DPP"
-            },
-            {
-                name: "Road Rehabilitation Project",
-                sector: "Infrastructure",
-                ministry: "Road Transport",
-                estimatedCost: "4,000 Cr",
-                completion: "88%",
-                range: "80-100%",
-                pdName: "Engr. Sabuj Uddin",
-                projectType: "TAPP"
-            },
-            {
-                name: "Community Health Center Network",
-                sector: "Health",
-                ministry: "Health",
-                estimatedCost: "3,200 Cr",
-                completion: "95%",
-                range: "80-100%",
-                pdName: "Dr. Samiul Islam",
-                projectType: "Feasibility"
-            },
-            {
                 name: "Vocational Training Completion",
-                sector: "Energy",
+                sector: "Power and Energy",
                 ministry: "Education",
                 estimatedCost: "1,800 Cr",
                 completion: "84%",
                 range: "80-100%",
                 pdName: "Md. Bablur Rahman",
+                projectType: "Own Fund"
+            },
+            {
+                name: "Solar Street Light Installation",
+                sector: "EnerPower and Energy",
+                ministry: "Local Government",
+                estimatedCost: "1,200 Cr",
+                completion: "99%",
+                range: "80-100%",
+                pdName: "Md. Shahinur Rahman",
                 projectType: "Own Fund"
             },
             {
@@ -778,7 +825,7 @@
                 completion: "91%",
                 range: "80-100%",
                 pdName: "Engr. AKM Luthfur Rahman",
-                projectType: "DPP"
+                projectType: "Own Fund"
             },
             {
                 name: "District Court Digitization",
@@ -788,47 +835,7 @@
                 completion: "97%",
                 range: "80-100%",
                 pdName: "Mirza Tariq Beg",
-                projectType: "TAPP"
-            },
-            {
-                name: "Surface Water Treatment Plant",
-                sector: "Energy",
-                ministry: "Water Resources",
-                estimatedCost: "6,800 Cr",
-                completion: "86%",
-                range: "80-100%",
-                pdName: "Engr. Shamsul Alam",
-                projectType: "Feasibility"
-            },
-            {
-                name: "Solar Street Light Installation",
-                sector: "Energy",
-                ministry: "Local Government",
-                estimatedCost: "1,200 Cr",
-                completion: "99%",
-                range: "80-100%",
-                pdName: "Md. Shahinur Rahman",
                 projectType: "Own Fund"
-            },
-            {
-                name: "Flyover Construction Final Handover",
-                sector: "Transport",
-                ministry: "Road Transport",
-                estimatedCost: "7,500 Cr",
-                completion: "94%",
-                range: "80-100%",
-                pdName: "Engr. Shihab Akhtar",
-                projectType: "DPP"
-            },
-            {
-                name: "Primary Health Supply Chain",
-                sector: "Energy",
-                ministry: "Health",
-                estimatedCost: "2,900 Cr",
-                completion: "89%",
-                range: "80-100%",
-                pdName: "Dr. Niaz Ahmed",
-                projectType: "TAPP"
             }
         ];
 
@@ -853,7 +860,7 @@
                 "Education": "badge-purple", // Make sure to add .badge-purple to your CSS if missing
                 "Health": "badge-red",
                 "Transport": "badge-green",
-                "Energy": "badge-orange"     // Using theme orange for yellow/gold accent matching
+                "Power and Energy": "badge-orange"     // Using theme orange for yellow/gold accent matching
             };
             badgeColorClass = sectorColorMap[selectedSector] || "badge-blue";
 
@@ -861,8 +868,15 @@
             // Handle Project Type Filter Router
             filteredProjects = allProjects.filter(project => project.projectType === selectedType);
             currentMeta = typeMetadata[selectedType] || { count: filteredProjects.length, desc: "" };
-            badgeText = `${selectedType} Type`;
-            badgeColorClass = "badge-blue";
+            badgeText = `${selectedType} Projects`;
+
+            const typeColorMap = {
+                "Own Fund": "badge-green",
+                "DPP": "badge-blue",
+                "Feasibility": "badge-orange",
+                "TAPP": "badge-skyblue"
+            };
+            badgeColorClass = typeColorMap[selectedType] || "badge-blue";
 
         } else {
             // Default Fallback: Handle Range Completion Filter Router
@@ -890,9 +904,9 @@
         badge.innerText = badgeText;
 
         if (selectedSector) {
-            document.getElementById('pageTitle').innerText = `${selectedSector} Projects`;
+            document.getElementById('pageTitle').innerText = `${selectedSector} Sector Projects`;
         } else if (selectedType) {
-            document.getElementById('pageTitle').innerText = `${selectedType} Project List`;
+            document.getElementById('pageTitle').innerText = `${selectedType} Projects`;
         } else {
             document.getElementById('pageTitle').innerText = `${selectedRange || '0-30%'} Completion Projects`;
         }
@@ -946,11 +960,6 @@
                         <td>${project.ministry}</td>
                         <td>${project.estimatedCost}</td>
                         <td>${project.completion}</td>
-                        <td>
-                            <button class="view-btn">
-                                View Details
-                            </button>
-                        </td>
                     </tr>
                 `;
             });

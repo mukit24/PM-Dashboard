@@ -120,7 +120,7 @@
         .divider-dashed {
             height: 1px;
             background: #e2e8f0;
-            margin: 12px 0;
+            margin: 6px 0;
         }
 
         /* Card with left-right layout */
@@ -143,8 +143,8 @@
 
         /* Horizontal bar chart for card 1 - full size */
         .horizontal-bar-container {
-            width: 100%;
-            height: 130px;
+            width: 100px;
+            height: 100px;
             /* increased height to fill space */
             margin-top: 4px;
         }
@@ -465,6 +465,67 @@
                 width: auto;
             }
         }
+
+        /* Container block that wraps the custom legend items */
+        .custom-legend-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            column-gap: 14px;
+            /* Equivalent to gap-x-6 (1.5rem) */
+            row-gap: 5px;
+            /* Equivalent to gap-y-2 (0.5rem) */
+            margin-top: 16px;
+            /* Equivalent to mt-4 (1rem) */
+            padding-top: 12px;
+            /* Equivalent to border-t border-slate-100 */
+            width: 100%;
+            /* Equivalent to w-full */
+            font-size: 10px;
+            /* Equivalent to text-xs (0.75rem) */
+            font-weight: 500;
+            /* Equivalent to font-medium */
+            color: #475569;
+            /* Equivalent to text-slate-600 */
+            font-family: sans-serif;
+        }
+
+        /* Individual legend item pairing the square and the text label */
+        .custom-legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            /* Equivalent to gap-2 (0.5rem) */
+        }
+
+        /* Base structural properties for the color boxes */
+        .color-box {
+            width: 12px;
+            /* Equivalent to w-3 (0.75rem) */
+            height: 12px;
+            /* Equivalent to h-3 (0.75rem) */
+            border-radius: 2px;
+            /* Equivalent to rounded-sm (0.125rem) */
+            display: inline-block;
+        }
+
+        /* Hex Color mapping matches your original data setup */
+        .bg-dpp {
+            background-color: #2c6e9e;
+        }
+
+        .bg-tapp {
+            background-color: #48a0c0;
+        }
+
+        .bg-feasibility {
+            background-color: #f4a261;
+        }
+
+        .bg-ownfund {
+            background-color: #2a9d8f;
+        }
     </style>
 </head>
 
@@ -484,9 +545,23 @@
                     </div>
                     <div class="card-right-180">
                         <div class="horizontal-bar-container">
-                            <canvas id="categoryBarChart" width="180" height="130"
-                                style="width:180px; height:130px;"></canvas>
+                            <canvas id="categoryBarChart" width="100" height="100"
+                                style="width:100px; height:100px;"></canvas>
                         </div>
+                    </div>
+                </div>
+                <div class="custom-legend-container">
+                    <div class="custom-legend-item">
+                        <span class="color-box bg-dpp"></span> DPP
+                    </div>
+                    <div class="custom-legend-item">
+                        <span class="color-box bg-tapp"></span> TAPP
+                    </div>
+                    <div class="custom-legend-item">
+                        <span class="color-box bg-feasibility"></span> Feasibility
+                    </div>
+                    <div class="custom-legend-item">
+                        <span class="color-box bg-ownfund"></span> Own Fund
                     </div>
                 </div>
             </div>
@@ -527,30 +602,6 @@
                 </div>
             </div>
 
-            <!-- CARD 3: HIGH-VALUE PROJECTS -->
-            <div class="dashboard-card">
-                <div class="card-header">
-                    <span class="card-title"><i class="fas fa-gem"></i> HIGH-VALUE PROJECTS</span>
-                    <span class="trend-badge">> BDT 1,000 Cr</span>
-                </div>
-                <div class="card-with-right-chart">
-                    <div class="card-left">
-                        <div class="kpi-number">42</div>
-                        <div class="stat-item" style="margin-top:8px;"><span class="stat-label"><i
-                                    class="fas fa-coins"></i> Total allocation</span><span class="stat-value">1,28,500
-                                Cr</span></div>
-                        <div class="stat-item"><span class="stat-label"><i class="fas fa-percent"></i> Budget
-                                share</span><span class="stat-value">52.3% (Top 15%)</span></div>
-                    </div>
-                    <div class="card-right">
-                        <div class="donut-wrapper">
-                            <canvas id="sectorDonutChart" width="115" height="115"
-                                style="width:115px; height:115px;"></canvas>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
             <!-- CARD 4: PROGRESS OVERVIEW (overrun items redesigned as two lines) -->
             <div class="dashboard-card">
                 <div class="card-header">
@@ -560,13 +611,13 @@
                 <div class="progress-chart">
                     <div class="progress-stack" id="progressStack">
                         <div class="progress-segment" data-range="0-30%"
-                            style="width: 18.5%; background-color: #ef4444;">250</div>
+                            style="width: 18.5%; background-color: #ef4444;">162</div>
                         <div class="progress-segment" data-range="30-60%"
-                            style="width: 29.6%; background-color: #f59e0b;">400</div>
+                            style="width: 29.6%; background-color: #f59e0b;">540</div>
                         <div class="progress-segment" data-range="60-80%"
-                            style="width: 33.3%; background-color: #10b981;">450</div>
+                            style="width: 33.3%; background-color: #10b981;">556</div>
                         <div class="progress-segment" data-range="80-100%"
-                            style="width: 18.5%; background-color: #3b82b6;">250</div>
+                            style="width: 18.5%; background-color: #3b82b6;">92</div>
                     </div>
                     <div class="progress-labels">
                         <div class="progress-label-item" data-range="0-30%"><span class="progress-label-color"
@@ -594,6 +645,30 @@
                             <div class="overrun-compare"><i class="fas fa-arrow-up"></i> +8% vs plan</div>
                         </div>
                         <span class="overrun-label"><i class="fas fa-chart-line"></i> Cost Overrun</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CARD 3: HIGH-VALUE PROJECTS -->
+            <div class="dashboard-card">
+                <div class="card-header">
+                    <span class="card-title"><i class="fas fa-gem"></i> HIGH-VALUE PROJECTS</span>
+                    <span class="trend-badge">> BDT 1,000 Cr</span>
+                </div>
+                <div class="card-with-right-chart">
+                    <div class="card-left">
+                        <div class="kpi-number">42</div>
+                        <div class="stat-item" style="margin-top:8px;"><span class="stat-label"><i
+                                    class="fas fa-coins"></i> Total allocation</span><span class="stat-value">1,28,500
+                                Cr</span></div>
+                        <div class="stat-item"><span class="stat-label"><i class="fas fa-percent"></i> Budget
+                                share</span><span class="stat-value">52.3% (Top 15%)</span></div>
+                    </div>
+                    <div class="card-right">
+                        <div class="donut-wrapper">
+                            <canvas id="sectorDonutChart" width="115" height="115"
+                                style="width:115px; height:115px;"></canvas>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -670,10 +745,52 @@
         };
 
         const progressData = {
-            "0-30%": { range: "0-30% Completion", description: "Early stage - Planning & initial implementation", projects: ["Smart City Master Plan", "Coastal Protection Study", "Digital Infrastructure Blueprint", "Railway Feasibility", "Urban Development Framework", "Water Treatment Design"], totalCount: 250 },
-            "30-60%": { range: "30-60% Completion", description: "Mid stage - Active implementation", projects: ["Highway Expansion Phase 2", "Rural Electrification", "School Digitalization", "Healthcare Equipment Rollout", "Bridge Construction Mid-phase", "Irrigation Canal Development"], totalCount: 400 },
-            "60-80%": { range: "60-80% Completion", description: "Advanced stage - Nearing completion", projects: ["Power Grid Modernization", "Metro Rail Phase 1", "Port Expansion Project", "Hospital Infrastructure Upgrade", "University Campus Development", "Telecom Network Enhancement"], totalCount: 450 },
-            "80-100%": { range: "80-100% Completion", description: "Final stage - Handover & closure", projects: ["Water Supply Scheme", "Road Rehabilitation Project", "Community Health Center Network", "Vocational Training Completion", "Rural Bridge Program Final Phase"], totalCount: 250 }
+            "0-30%": {
+                range: "0-30% Completion", description: "Early stage - Planning & initial implementation", projects: [
+                    'Ministry of Expatriates Welfare and Overseas Employment: 6 Projects',
+                    'Ministry of Science and Technology: 7 Projects',
+                    'Energy and Mineral Resources Division: 10 Projects',
+                    'Ministry of Water Resources: 46 Projects',
+                    'Ministry of Labour and Employment: 2 Projects',
+                    'Internal Resources Division (IRD): 7 Projects',
+                    'Health Service Division: 16 Projects',
+                    'Financial Institutions Division: 3 Projects',
+                    'Bridges Division: 2 Projects',
+                    'Ministry of Railways: 21 Projects',
+                    'Ministry of Land: 2 Projects',
+                    'Ministry of Social Welfare: 19 Projects',
+                    'Ministry of Defence: 17 Projects',
+                    'Ministry of Food: 4 Project',
+                ], totalCount: 162
+            },
+            "30-60%": { range: "30-60% Completion", description: "Mid stage - Active implementation", projects: ["Highway Expansion Phase 2", "Rural Electrification", "School Digitalization", "Healthcare Equipment Rollout", "Bridge Construction Mid-phase", "Irrigation Canal Development"], totalCount: 540 },
+            "60-80%": { range: "60-80% Completion", description: "Advanced stage - Nearing completion", projects: ["Power Grid Modernization", "Metro Rail Phase 1", "Port Expansion Project", "Hospital Infrastructure Upgrade", "University Campus Development", "Telecom Network Enhancement"], totalCount: 556 },
+            "80-100%": {
+                range: "80-100% Completion", description: "Final stage - Handover & closure", projects: [
+                    'Ministry of Industry: 1 Project',
+                    'Ministry of Textiles & Jute: 2 Projects',
+                    'Ministry of Railways: 3 Projects',
+                    'Ministry of Agriculture: 9 Projects',
+                    'Ministry of Disaster Management and Relief: 1 Project',
+                    'Ministry of Chittagong Hill Tracts Affairs: 1 Project',
+                    'Ministry of Environment, Forest and Climate Change: 4 Projects',
+                    'Ministry of Women and Childrens Affairs: 1 Project',
+                    'Implementation Monitoring and Evaluation Division (IMED): 1 Project',
+                    'Ministry of Youth and Sports: 2 Projects',
+                    'Ministry of Social Welfare: 1 Project',
+                    'Ministry of Shipping: 1 Project',
+                    'Ministry of Defence: 1 Project',
+                    'Ministry of Information and Broadcasting: 1 Project',
+                    'Ministry of Food: 1 Project',
+                    'Local Government Division: 18 Projects',
+                    'Secondary and Higher Education Division: 9 Projects',
+                    'Ministry of Cultural Affairs: 1 Project',
+                    'Technical and Madrasa Education Division: 1 Project',
+                    'Ministry of Civil Aviation and Tourism: 1 Project',
+                    'Ministry of Fisheries and Livestock: 2 Projects',
+                    'Road Transport and Highways Division: 5 Projects'
+                ], totalCount: 92
+            }
         };
 
         // Mock ministries data
@@ -701,58 +818,63 @@
         document.getElementById('modalCloseSecondary').onclick = closeModal;
         window.onclick = function (e) { if (e.target === document.getElementById('detailModal')) closeModal(); };
 
-        // CHART 1: Horizontal bar chart (full size, no legend)
+        // CHART 1: Pie chart (full size, no legend, datalabels visible)
         const barCtx = document.getElementById('categoryBarChart').getContext('2d');
         new Chart(barCtx, {
-            type: 'bar',
+            type: 'pie',
             data: {
                 labels: ['DPP', 'TAPP', 'Feasibility', 'Own Fund'],
                 datasets: [{
                     label: 'Projects',
                     data: [1141, 121, 22, 66],
                     backgroundColor: ['#2c6e9e', '#48a0c0', '#f4a261', '#2a9d8f'],
-                    borderRadius: 4,
-                    barPercentage: 0.7,
-                    categoryPercentage: 0.8
+                    borderWidth: 1,
+                    borderColor: '#ffffff'
                 }]
             },
             options: {
-                indexAxis: 'y',
                 responsive: true,
                 maintainAspectRatio: true,
                 plugins: {
-                    legend: { display: false },
-                    tooltip: { callbacks: { label: (ctx) => `${ctx.raw} projects` } }
-                },
-                scales: {
-                    x: { ticks: { font: { size: 9 } }, grid: { color: '#eef2f8' }, title: { display: true, text: 'Project Categories', font: { size: 9 } } },
-                    y: { ticks: { font: { size: 9 } }, grid: { display: false } }
+                    legend: {
+                        display: false,
+                        position: 'top',
+                        labels: { font: { size: 10 } }
+                    },
+                    tooltip: {
+                        callbacks: { label: (ctx) => ` ${ctx.label}: ${ctx.raw} projects` }
+                    },
+                    // Using the datalabels plugin to ensure small segments are readable
+                    datalabels: {
+                        color: (context) => context.raw < 70 ? '#1e293b' : '#ffffff', // Dark text for tiny segments
+                        anchor: (context) => context.raw < 70 ? 'end' : 'center',    // Push out tiny values
+                        align: (context) => context.raw < 70 ? 'outer' : 'center',   // Render outside slice if tiny
+                        offset: 10,
+                        font: { weight: '700', size: 10 },
+                        formatter: (value) => value
+                    }
                 },
                 onClick: (event, activeElements) => {
                     if (activeElements.length) {
                         const index = activeElements[0].index;
                         const labels = ['DPP', 'TAPP', 'Feasibility', 'Own Fund'];
                         const category = labels[index];
+                        // let redirectPath = '';
 
                         switch (category) {
                             case 'DPP':
-                                redirectPath = 'projects_list.html?type=DPP'
+                                redirectPath = 'projects_list.html?type=DPP';
                                 break;
-
                             case 'TAPP':
-                                redirectPath = 'projects_list.html?type=TAPP'
+                                redirectPath = 'projects_list.html?type=TAPP';
                                 break;
-
                             case 'Feasibility':
-                                redirectPath = 'projects_list.html?type=Feasibility'
+                                redirectPath = 'projects_list.html?type=Feasibility';
                                 break;
-
                             case 'Own Fund':
-                                redirectPath = 'projects_list.html?type=Own Fund'
+                                redirectPath = 'projects_list.html?type=Own Fund';
                                 break;
-
                             default:
-                                // Fallback case if an element falls outside the array map bounds
                                 console.warn(`Unrecognized project category selection: ${category}`);
                                 break;
                         }
