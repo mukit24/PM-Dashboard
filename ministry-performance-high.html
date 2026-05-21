@@ -5,11 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FY 2024-25 Ministry Financial Performance Dashboard</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.2/dist/chart.umd.min.js"></script>
-    
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0/dist/chartjs-plugin-datalabels.min.js"></script>
-    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body class="bg-slate-50 text-slate-800 font-sans antialiased min-h-screen p-4 md:p-8">
@@ -26,97 +23,87 @@
                 <i class="fa-solid fa-chart-line mr-1"></i> Performance Monitoring Ledger
             </div>
             <h1 class="text-xl md:text-2xl font-bold text-slate-900 tracking-tight">
-                Financial Progress of 41 Ministries/Divisions Above National Average (68.18%)
+                Financial Progress of Ministries/Divisions Above National Average (30.63%)
             </h1>
             <p class="text-xs text-slate-500 mt-1">Fiscal Year 2024-2025 | Data Source: IMED, Ministry of Planning</p>
         </div>
         
         <div class="bg-slate-100 border border-slate-200 px-5 py-2 rounded-lg text-center md:text-right w-full md:w-auto shadow-sm self-stretch md:self-auto">
             <span class="text-[10px] uppercase text-slate-500 block font-semibold tracking-wider">National Average</span>
-            <span class="text-xl font-black text-amber-600">68.18%</span>
+            <span class="text-xl font-black text-amber-600">30.63%</span>
         </div>
     </header>
 
     <main class="max-w-7xl mx-auto">
-
         <section class="bg-white border border-slate-200 rounded-xl p-4 md:p-6 shadow-md">
             <div class="flex flex-col sm:flex-row sm:items-center justify-between mb-6 border-b border-slate-100 pb-4 gap-3">
                 <h2 class="text-sm md:text-base font-bold text-slate-800 uppercase tracking-wide flex items-center">
                     <i class="fa-solid fa-bars-progress text-indigo-500 mr-2"></i> 
-                    Implementation Metrics Profile
+                    Implementation Metrics Profile (25 Ministries/Divisions)
                 </h2>
-                
-                <div class="inline-flex p-1 bg-slate-100 rounded-lg border border-slate-200">
-                    <button id="btnRank1" onclick="switchDataset('rank1')" class="px-4 py-1.5 rounded-md text-xs font-medium tracking-wide transition duration-150 shadow-sm bg-white text-slate-900 font-semibold">
-                        <i class="fa-solid fa-trophy text-amber-500 mr-1.5"></i> Rank 1 - 20
-                    </button>
-                    <button id="btnRank2" onclick="switchDataset('rank2')" class="px-4 py-1.5 rounded-md text-xs font-medium tracking-wide transition duration-150 text-slate-600 hover:text-slate-900">
-                        <i class="fa-solid fa-list-check text-sky-500 mr-1.5"></i> Rank 21 - 41
-                    </button>
-                </div>
             </div>
 
-            <div class="relative w-full overflow-x-auto min-h-[460px]">
-                <canvas id="unifiedPerformanceChart" class="min-w-[950px] max-h-[460px]"></canvas>
+            <div class="relative w-full overflow-x-auto min-h-[500px]">
+                <canvas id="unifiedPerformanceChart" class="min-w-[1200px] max-h-[480px]"></canvas>
             </div>
         </section>
-
     </main>
 
     <script>
-        // Safely register the DataLabels plugin to Chart.js globally
+        // Register the DataLabels plugin to Chart.js globally
         if (typeof ChartDataLabels !== 'undefined') {
             Chart.register(ChartDataLabels);
         } else {
-            console.error("ChartDataLabels failed to initialize. Please check network restrictions on CDNs.");
+            console.error("ChartDataLabels failed to initialize.");
         }
 
-        // STATIC REPOSITORY FOR DATASETS
-        const dataRepository = {
-            rank1: {
-                labels: [
-                    'Power Division', 'Ministry of Foreign Affairs', 'Energy & Mineral Resources Div.', 'Security Services Division', 
-                    'Ministry of Water Resources', 'Anti-Corruption Commission', 'Ministry of Textiles & Jute', 'Parliament Secretariat', 
-                    'Financial Institutions Div.', 'Ministry of Disaster Mgmt & Relief', 'Cabinet Division', 'Ministry of Agriculture', 
-                    'Ministry of Youth & Sports', 'Economic Relations Division', 'Legislative & Parliament Affairs Div.', 
-                    'Statistics & Informatics Div.', 'Local Government Division', 'Ministry of Housing & Public Works', 
-                    'Law & Justice Division', 'Ministry of Labour & Employment'
-                ],
-                data: [98.15, 97.97, 97.83, 96.21, 94.80, 92.99, 91.46, 91.00, 90.83, 90.76, 90.76, 90.61, 90.27, 89.90, 88.71, 86.65, 86.43, 85.59, 85.56, 85.36],
-                color: '#A0522D', // Brown color matches Rank 1-20
-                borderColor: '#8B4513',
-                yMin: 75,
-                yMax: 100
-            },
-            rank2: {
-                labels: [
-                    'Ministry of Defence', 'Ministry of Info. & Broadcasting', 'Implementation Monitoring & Eval. Div.', 'Ministry of Environment, Forest & Climate Change',
-                    'Rural Development & Co-operatives Div.', 'Ministry of Chittagong Hill Tracts Affairs', 'Secondary & Higher Education Div.', 'Ministry of Shipping',
-                    'Ministry of Fisheries & Livestock', 'Ministry of Religious Affairs', 'Ministry of Railways', 'Posts & Telecommunications Div.',
-                    'Ministry of Commerce', 'Road Transport & Highways Div.', 'Ministry of Social Welfare', 'Expatriates Welfare & Overseas Employment',
-                    'Information & Communication Tech. Div.', 'Ministry of Science & Technology', 'Technical & Madrasah Education Div.', 'Planning Division',
-                    'Ministry of Industries'
-                ],
-                data: [84.00, 82.62, 82.36, 81.96, 81.59, 81.28, 80.43, 79.08, 78.93, 78.76, 75.78, 75.31, 74.02, 73.24, 73.17, 71.55, 71.30, 70.64, 70.12, 69.92, 68.41],
-                color: '#00A8E8', // Cyan color matches Rank 21-41
-                borderColor: '#0090C5',
-                yMin: 40,
-                yMax: 90
-            }
+        // Integrated Single Source Dataset from Ledger Image
+        const highPerformersData = {
+            labels: [
+                'Ministry of Science and Technology',
+                'Cabinet Division',
+                'Energy and Mineral Resources Division',
+                'Bangladesh Public Service Commission Secretariat',
+                'Ministry of Cultural Affairs',
+                'Ministry of Labour and Employment',
+                'Ministry of Agriculture',
+                'Legislative and Parliament Affairs Division',
+                'Technical and Madrasah Education Division',
+                'Ministry of Textiles & Jute',
+                'Ministry of Water Resources',
+                'Secondary and Higher Education Division',
+                'Economic Relations Division (ERD)',
+                'Ministry of Land',
+                'Ministry of Social Welfare',
+                'Implementation Monitoring and Evaluation Division (IMED)',
+                'Ministry of Civil Aviation and Tourism',
+                'Ministry of Industry',
+                'Information and Communication Technology Division',
+                'Ministry of Fisheries and Livestock',
+                'Power Division',
+                'Bridges Division',
+                'Ministry of Disaster Management and Relief',
+                'Road Transport and Highways Division',
+                'Anti Corruption Commission'
+            ],
+            percentages: [
+                88.66, 67.29, 60.82, 58.35, 50.79, 49.12, 46.95, 45.58, 45.03, 44.93, 
+                43.99, 42.79, 42.37, 40.94, 40.63, 39.80, 39.78, 39.69, 37.77, 35.98, 
+                35.61, 35.46, 34.28, 33.72, 33.04
+            ]
         };
 
-        // INITIALIZE CHART PIPELINE (Default setup targets Rank 1-20)
         const ctx = document.getElementById('unifiedPerformanceChart').getContext('2d');
         const performanceChart = new Chart(ctx, {
             type: 'bar',
             data: {
-                labels: dataRepository.rank1.labels,
+                labels: highPerformersData.labels,
                 datasets: [{
-                    data: dataRepository.rank1.data,
-                    backgroundColor: dataRepository.rank1.color,
-                    borderColor: dataRepository.rank1.borderColor,
+                    data: highPerformersData.percentages,
+                    backgroundColor: '#2e6f40', // Professional Emerald Green tone for high-performance vectors
+                    borderColor: '#1b4d24',
                     borderWidth: 1,
-                    barPercentage: 0.55
+                    barPercentage: 0.6
                 }]
             },
             options: {
@@ -124,21 +111,26 @@
                 maintainAspectRatio: false,
                 plugins: {
                     legend: { display: false },
-                    tooltip: { enabled: true },
+                    tooltip: { 
+                        enabled: true,
+                        callbacks: {
+                            label: (context) => ` Progress: ${context.raw}%`
+                        }
+                    },
                     datalabels: {
-                        color: '#ffffff', // Render text values inside bars
+                        color: '#ffffff',
                         anchor: 'end',
                         align: 'bottom',
-                        offset: 10,
-                        rotation: -90, // Fix truncation errors with a vertical alignment rotation
-                        font: { weight: '600', size: 12 },
-                        formatter: (value) => value + '%'
+                        offset: 8,
+                        rotation: -90, 
+                        font: { weight: '600', size: 11 },
+                        formatter: (value) => value.toFixed(2) + '%'
                     }
                 },
                 scales: {
                     y: {
-                        min: dataRepository.rank1.yMin,
-                        max: dataRepository.rank1.yMax,
+                        min: 0,
+                        max: 100,
                         ticks: { color: '#64748b', callback: (value) => value + '%' },
                         grid: { color: '#e2e8f0', borderDash: [3, 3] }
                     },
@@ -146,43 +138,14 @@
                         ticks: {
                             color: '#1e293b',
                             font: { size: 10, weight: '500' },
-                            maxRotation: 75,
-                            minRotation: 75
+                            maxRotation: 65,
+                            minRotation: 65
                         },
                         grid: { display: false }
                     }
                 }
             }
         });
-
-        // DYNAMIC SWITCH ACTION HANDLER
-        function switchDataset(targetKey) {
-            const selectedSet = dataRepository[targetKey];
-            const btn1 = document.getElementById('btnRank1');
-            const btn2 = document.getElementById('btnRank2');
-
-            // 1. Swap Active UI Tab Classes
-            if (targetKey === 'rank1') {
-                btn1.className = "px-4 py-1.5 rounded-md text-xs font-medium tracking-wide transition duration-150 shadow-sm bg-white text-slate-900 font-semibold";
-                btn2.className = "px-4 py-1.5 rounded-md text-xs font-medium tracking-wide transition duration-150 text-slate-600 hover:text-slate-900";
-            } else {
-                btn2.className = "px-4 py-1.5 rounded-md text-xs font-medium tracking-wide transition duration-150 shadow-sm bg-white text-slate-900 font-semibold";
-                btn1.className = "px-4 py-1.5 rounded-md text-xs font-medium tracking-wide transition duration-150 text-slate-600 hover:text-slate-900";
-            }
-
-            // 2. Inject target labels and specific structural array matrices
-            performanceChart.data.labels = selectedSet.labels;
-            performanceChart.data.datasets[0].data = selectedSet.data;
-            performanceChart.data.datasets[0].backgroundColor = selectedSet.color;
-            performanceChart.data.datasets[0].borderColor = selectedSet.borderColor;
-
-            // 3. Dynamic adjustment scaling
-            performanceChart.options.scales.y.min = selectedSet.yMin;
-            performanceChart.options.scales.y.max = selectedSet.yMax;
-
-            // 4. Trigger Chart.js recalculation matrix redraw
-            performanceChart.update();
-        }
     </script>
 </body>
 </html>
