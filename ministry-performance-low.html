@@ -38,10 +38,10 @@
         <section class="bg-white border border-slate-200 rounded-xl p-4 md:p-6 shadow-md">
             <div class="flex flex-col sm:flex-row sm:items-center justify-between mb-6 border-b border-slate-100 pb-4 gap-3">
                 <h2 class="text-sm md:text-base font-bold text-slate-800 uppercase tracking-wide flex items-center">
-                    <i class="fa-solid fa-arrow-trend-down text-rose-500 mr-2"></i> 
+                    <i class="fa-solid fa-arrow-trend-down text-rose-500 mr-2"></i>
                     Ministries / Divisions With Implementation Deficits
                 </h2>
-                
+
                 <div class="inline-flex p-1 bg-slate-100 rounded-lg border border-slate-200">
                     <button id="btnRank1" onclick="switchDataset('rank1')" class="px-4 py-1.5 rounded-md text-xs font-medium tracking-wide transition duration-150 shadow-sm bg-white text-slate-900 font-semibold">
                         <i class="fa-solid fa-arrow-down-short-wide text-rose-500 mr-1.5"></i> Rank 26 - 41
@@ -135,7 +135,7 @@
                 maintainAspectRatio: false,
                 plugins: {
                     legend: { display: false },
-                    tooltip: { 
+                    tooltip: {
                         enabled: true,
                         callbacks: {
                             label: (context) => ` Progress: ${context.raw}%`
@@ -144,17 +144,17 @@
                     datalabels: {
                         // If value is less than 4.0%, use dark text color; else keep white text inside the bar
                         color: (context) => context.dataset.data[context.dataIndex] < 4.0 ? '0f172a' : '#ffffff',
-                        
+
                         // Force label positioning safely clear of the outer boundary edges
                         anchor: (context) => context.dataset.data[context.dataIndex] < 4.0 ? 'end' : 'end',
                         align: (context) => context.dataset.data[context.dataIndex] < 4.0 ? 'top' : 'bottom',
-                        
+
                         // Give explicit structural margin space when rendering above small bars
                         offset: (context) => context.dataset.data[context.dataIndex] < 4.0 ? 6 : 12,
-                        
+
                         // Keep text completely unrotated (horizontal) for tiny bars so it reads neatly above them
                         rotation: (context) => context.dataset.data[context.dataIndex] < 4.0 ? 0 : -90,
-                        
+
                         font: { weight: '700', size: 11 },
                         formatter: (value) => value.toFixed(2) + '%'
                     }

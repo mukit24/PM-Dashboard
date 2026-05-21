@@ -732,8 +732,8 @@
         let redirectPath;
 
         const financialBreakdown = {
-            Expenditure: { metric: "Total Expenditure", amount: "1,70,000 Cr", percentage: "68.4%", details: "68.4% of total allocation utilized. Major spending in Infrastructure & Energy sectors.", topProjects: ["National Highway Expansion (24,000 Cr)", "Power Grid Modernization (18,500 Cr)", "Rural Electrification (12,200 Cr)"] },
-            Remaining: { metric: "Unutilized Allocation", amount: "78,500 Cr", percentage: "31.6%", details: "31.6% remaining – committed pipeline and under-execution.", topProjects: ["Pending Disbursements", "Contract Renegotiations", "Q4 Acceleration Plans"] }
+            Expenditure: { metric: "Total Expenditure", amount: "1,70,000 Cr", percentage: "30.63%", details: "30.63% of total allocation utilized. Major spending in Infrastructure & Energy sectors.", topProjects: ["National Highway Expansion (24,000 Cr)", "Power Grid Modernization (18,500 Cr)", "Rural Electrification (12,200 Cr)"] },
+            Remaining: { metric: "Unutilized Allocation", amount: "78,500 Cr", percentage: "69.37%", details: "69.37% remaining – committed pipeline and under-execution.", topProjects: ["Pending Disbursements", "Contract Renegotiations", "Q4 Acceleration Plans"] }
         };
 
         const sectorDetails = {
@@ -890,7 +890,7 @@
         const gaugeCtx = document.getElementById('gaugeChart').getContext('2d');
         new Chart(gaugeCtx, {
             type: 'doughnut',
-            data: { datasets: [{ data: [68.4, 31.6], backgroundColor: ['#2c7da0', '#e9ecef'], borderWidth: 0, cutout: '70%', rotation: -90 }] },
+            data: { datasets: [{ data: [30.63, 69.37], backgroundColor: ['#2c7da0', '#e9ecef'], borderWidth: 0, cutout: '70%', rotation: -90 }] },
             options: {
                 responsive: true, maintainAspectRatio: true,
                 plugins: { tooltip: { callbacks: { label: (ctx) => `${ctx.raw}%` } }, legend: { display: false } },
@@ -909,7 +909,7 @@
             const span = document.createElement('div');
             span.className = 'gauge-center-text';
             span.style.cssText = 'position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); text-align:center; font-weight:800; font-size:0.8rem; color:#0b3b4e; pointer-events:none;';
-            span.innerHTML = `68%`;
+            span.innerHTML = `30.63%`;
             gaugeParent.style.position = 'relative';
             gaugeParent.appendChild(span);
         }

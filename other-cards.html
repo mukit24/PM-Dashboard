@@ -91,7 +91,7 @@
             margin: 0;
             padding: 0;
         }
-        
+
         #chartPage20 {
             width: 100%;
             min-height: 500px;
@@ -121,7 +121,7 @@
             padding-right: 6px;
             min-width: 0;
         }
-        
+
         #chartPage12Donut {
             max-width: 100%;
             width: auto;
@@ -215,7 +215,7 @@
                 min-height: 400px;
             }
         }
-        
+
         @media (max-width: 600px) {
             .fifty-fifty-layout {
                 flex-direction: column;
@@ -237,7 +237,7 @@
                 min-height: 350px;
             }
         }
-        
+
         @media (min-width: 901px) {
             .fifty-fifty-layout {
                 flex-direction: row;
@@ -248,7 +248,7 @@
                 min-width: 0;
             }
         }
-        
+
         @media (min-width: 1400px) {
             #chartPage20 {
                 min-height: 550px;
@@ -277,7 +277,7 @@
         <!-- CHART 2: SECTOR-WISE ALLOCATION -->
         <div class="col-half">
             <div class="card-header-child">
-                <h3>📑 Sector-wise Allocation (15 Sectors) — FY 2025-26</h3>
+                <h3>📑 Sector-wise Allocation — FY 2025-26</h3>
                 <p>Allocation distribution by Economic Sector | Total ADP Allocation: 211,403.58 Cr Taka</p>
             </div>
             <div class="card-content">
@@ -310,41 +310,41 @@
 <script>
     // ========== CHART 1: (UNCHANGED) ==========
     const fiscalYearsNew = ['FY 2021-22', 'FY 2022-23', 'FY 2023-24', 'FY 2024-25', 'FY 2025-26'];
-    const originalAllocNew = [155843.44, 183651.68, 270085.14, 266163.67, 2165447.87];
+    const originalAllocNew = [155843.44, 183651.68, 270085.14, 266163.67, 216544.78];
     const revisedAllocNew = [212907.67, 230600.22, 254560.34, 226166.30, 211403.58];
     const expenditureNew = [199406.45, 169706.77, 185543.65, 154239.65, 64752.13];
-    
+
     new Chart(document.getElementById('chartPage8'), {
         type: 'bar',
         data: {
             labels: fiscalYearsNew,
             datasets: [
-                { label: 'Original Allocation (Cr Taka)', data: originalAllocNew, backgroundColor: '#2f6b5c', borderRadius: 5, barPercentage: 0.7 },
-                { label: 'Revised Allocation (Cr Taka)', data: revisedAllocNew, backgroundColor: '#e6a137', borderRadius: 5, barPercentage: 0.7 },
-                { label: 'Actual Expenditure (Cr Taka)', data: expenditureNew, backgroundColor: '#c07a2c', borderRadius: 5, barPercentage: 0.7 }
+                { label: 'Original Allocation', data: originalAllocNew, backgroundColor: '#2f6b5c', borderRadius: 5, barPercentage: 0.7 },
+                { label: 'Revised Allocation', data: revisedAllocNew, backgroundColor: '#e6a137', borderRadius:  5, barPercentage: 0.7 },
+                { label: 'Actual Expenditure', data: expenditureNew, backgroundColor: '#c07a2c', borderRadius: 5, barPercentage: 0.7 }
             ]
         },
         options: {
             responsive: true,
             maintainAspectRatio: true,
             plugins: {
-                tooltip: { 
-                    callbacks: { 
-                        label: (ctx) => `${ctx.dataset.label}: ${ctx.raw.toLocaleString('en-IN')} Cr Taka` 
-                    } 
+                tooltip: {
+                    callbacks: {
+                        label: (ctx) => `${ctx.dataset.label}: ${ctx.raw.toLocaleString('en-IN')} Cr Taka`
+                    }
                 },
                 legend: { position: 'top', labels: { font: { size: 9, weight: 'bold' } } }
             },
             scales: {
-                y: { 
-                    title: { display: true, text: 'Crore Taka →', font: { size: 8 } }, 
-                    ticks: { 
+                y: {
+                    title: { display: true, text: 'Crore Taka →', font: { size: 8 } },
+                    ticks: {
                         callback: (v) => {
                             if (v >= 1000000) return (v / 1000000).toFixed(1) + 'M Cr';
                             return v.toLocaleString('en-IN');
-                        }, 
-                        font: { size: 8 } 
-                    } 
+                        },
+                        font: { size: 8 }
+                    }
                 },
                 x: { ticks: { font: { size: 8 } } }
             }
@@ -353,7 +353,7 @@
 
     // ========== CHART 2: SECTOR-WISE ALLOCATION (UNCHANGED) ==========
     const TOTAL_ALLOCATION = 211403.58;
-    
+
     const sectorNamesNew = [
         'General Services',
         'Defense',
@@ -371,21 +371,21 @@
         'Science & ICT',
         'Social Security'
     ];
-    
+
     const sectorAllocationNew = [
         2026.24, 538.16, 2825.58, 5515.77, 8630.92,
         34656.38, 40641.40, 19622.47, 12653.88, 19284.52,
         4756.37, 2401.54, 18558.41, 4345.31, 1813.78
     ];
-    
+
     const sectorPercentNew = sectorAllocationNew.map(v => (v / TOTAL_ALLOCATION) * 100);
-    
+
     const colorPaletteNew = [
         '#2d6f58', '#e6a137', '#c07a2c', '#4a8c7a', '#d98c2f',
         '#3d7e6a', '#b8742a', '#5f9e8a', '#e8943e', '#2a6b55',
         '#ca8434', '#6ea692', '#d68a3a', '#35806a', '#b97e32'
     ];
-    
+
     const donutCtx = document.getElementById('chartPage12Donut').getContext('2d');
     new Chart(donutCtx, {
         type: 'doughnut',
@@ -428,7 +428,7 @@
             layout: { padding: 10 }
         }
     });
-    
+
     function generateCompactLegendNew() {
         const legendContainer = document.getElementById('donutLegend');
         legendContainer.innerHTML = '';
@@ -438,7 +438,7 @@
             percent: sectorPercentNew[idx],
             color: colorPaletteNew[idx % colorPaletteNew.length]
         })).sort((a, b) => b.value - a.value);
-        
+
         sortedData.forEach(item => {
             const legendItem = document.createElement('div');
             legendItem.className = 'legend-item';
@@ -473,7 +473,7 @@
         'Technical & Madrasah Education Division',
         'Health Services Division'
     ];
-    
+
     // Revised Allocation in Crore Taka (converted from Lakh: divide by 100)
     // Values from column (5) - সংশোধিত এডিপি বরাদ্দ (in Lakh Taka)
     const revisedAllocationLakh = [
@@ -493,10 +493,10 @@
         314710.79,    // Technical & Madrasah Education Division
         312841.00     // Health Services Division
     ];
-    
+
     // Convert Lakh to Crore (1 Crore = 100 Lakh)
     const revisedAllocationCrore = revisedAllocationLakh.map(val => val / 100);
-    
+
     // Financial Progress % from column (8) - আর্থিক অগ্রগতি (%)
     const financialProgressPercent = [
         35.96,   // Local Government Division
@@ -515,14 +515,14 @@
         45.03,   // Technical & Madrasah Education Division
         8.38     // Health Services Division
     ];
-    
+
     // Calculate Expenditure based on Financial Progress % of Revised Allocation
-    const expenditureCrore = revisedAllocationCrore.map((alloc, idx) => 
+    const expenditureCrore = revisedAllocationCrore.map((alloc, idx) =>
         (alloc * financialProgressPercent[idx] / 100)
     );
-    
+
     const ctxPage20 = document.getElementById('chartPage20').getContext('2d');
-    
+
     function setChart20Height() {
         const container = document.querySelector('.row-second');
         if (container) {
@@ -535,22 +535,22 @@
             }
         }
     }
-    
+
     const ministryChart = new Chart(ctxPage20, {
         type: 'bar',
         data: {
             labels: ministryNamesFromPDF,
             datasets: [
-                { label: 'Revised Allocation (Cr Taka)', data: revisedAllocationCrore, backgroundColor: '#1f6a4c', borderRadius: 5, barPercentage: 0.7 },
-                { label: 'Actual Expenditure (Cr Taka)', data: expenditureCrore, backgroundColor: '#dc8b2c', borderRadius: 5, barPercentage: 0.7 }
+                { label: 'Revised Allocation', data: revisedAllocationCrore, backgroundColor: '#1f6a4c', borderRadius: 5, barPercentage: 0.7 },
+                { label: 'Actual Expenditure', data: expenditureCrore, backgroundColor: '#dc8b2c', borderRadius: 5, barPercentage: 0.7 }
             ]
         },
         options: {
             responsive: true,
             maintainAspectRatio: false,
             plugins: {
-                tooltip: { 
-                    callbacks: { 
+                tooltip: {
+                    callbacks: {
                         label: (ctx) => {
                             let value = ctx.raw;
                             let label = ctx.dataset.label;
@@ -559,25 +559,25 @@
                     },
                     bodyFont: { size: 11 }
                 },
-                legend: { 
-                    position: 'top', 
-                    labels: { font: { size: 10, weight: 'bold' } } 
+                legend: {
+                    position: 'top',
+                    labels: { font: { size: 10, weight: 'bold' } }
                 }
             },
             scales: {
-                y: { 
-                    title: { display: true, text: 'Crore Taka →', font: { size: 10, weight: 'bold' } }, 
-                    ticks: { 
-                        callback: (v) => v.toLocaleString('en-IN'), 
-                        font: { size: 9 } 
+                y: {
+                    title: { display: true, text: 'Crore Taka →', font: { size: 10, weight: 'bold' } },
+                    ticks: {
+                        callback: (v) => v.toLocaleString('en-IN'),
+                        font: { size: 9 }
                     },
                     grid: { color: '#e0d8cc' }
                 },
-                x: { 
-                    ticks: { 
-                        font: { size: 8, weight: '500' }, 
-                        rotation: -35, 
-                        maxRotation: 45, 
+                x: {
+                    ticks: {
+                        font: { size: 8, weight: '500' },
+                        rotation: -35,
+                        maxRotation: 45,
                         minRotation: 35,
                         autoSkip: false
                     },
@@ -594,14 +594,14 @@
             }
         }
     });
-    
+
     window.addEventListener('resize', function() {
         setChart20Height();
         setTimeout(() => {
             ministryChart.resize();
         }, 100);
     });
-    
+
     setTimeout(() => {
         setChart20Height();
         ministryChart.resize();
@@ -612,44 +612,44 @@
     .info-note, .footer-note {
         display: none !important;
     }
-    
+
     #chartPage8 {
         max-height: 280px;
         width: 100%;
     }
-    
+
     .full-width-chart-container {
         width: 100%;
         display: block;
     }
-    
+
     .row-second .card-content {
         padding: 16px 16px 20px 16px !important;
     }
-    
+
     .legend-item {
         transition: all 0.15s;
         cursor: default;
     }
-    
+
     @media (min-width: 1200px) {
         #chartPage20 {
             min-height: 520px;
         }
     }
-    
+
     @media (min-width: 1600px) {
         #chartPage20 {
             min-height: 580px;
         }
     }
-    
+
     @media (max-width: 900px) {
         #chartPage20 {
             min-height: 420px;
         }
     }
-    
+
     @media (max-width: 600px) {
         #chartPage20 {
             min-height: 380px;
@@ -658,7 +658,7 @@
             padding: 12px !important;
         }
     }
-    
+
     @media (min-width: 901px) {
         .fifty-fifty-layout {
             flex-direction: row;
