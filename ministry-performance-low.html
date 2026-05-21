@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FY 2024-25 Underperforming Ministries Performance Ledger</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.2/dist/chart.umd.min.js"></script>
+    
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0/dist/chartjs-plugin-datalabels.min.js"></script>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans antialiased min-h-screen p-4 md:p-8">
+
+    <nav class="max-w-7xl mx-auto mb-4 flex justify-end">
+        <a href="pm-dashboard.html" class="inline-flex items-center gap-2 bg-white hover:bg-slate-100 text-slate-700 border border-slate-200 px-4 py-2 rounded-lg text-xs font-semibold tracking-wide transition shadow-sm">
+            <i class="fa-solid fa-arrow-left text-slate-500"></i> Back to Dashboard
+        </a>
+    </nav>
+
+    <header class="max-w-7xl mx-auto mb-8 bg-white border border-slate-200 rounded-xl p-6 shadow-md flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+        <div>
+            <div class="text-xs font-bold tracking-widest text-rose-600 uppercase mb-1">
+                <i class="fa-solid fa-triangle-exclamation mr-1"></i> Critical Monitoring Ledger
+            </div>
+            <h1 class="text-xl md:text-2xl font-bold text-slate-900 tracking-tight">
+                Financial Progress of 16 Underperforming Ministries/Divisions (Below National Average)
+            </h1>
+            <p class="text-xs text-slate-500 mt-1">Fiscal Year 2025-2026 | Data Source: IMED, Ministry of Planning</p>
+        </div>
+        <div class="bg-slate-100 border border-slate-200 px-5 py-2 rounded-lg text-center md:text-right w-full md:w-auto shadow-sm self-stretch md:self-auto">
+            <span class="text-[10px] uppercase text-slate-500 block font-semibold tracking-wider">National Average</span>
+            <span class="text-xl font-black text-rose-600">68.18%</span>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto">
+
+        <section class="bg-white border border-slate-200 rounded-xl p-4 md:p-6 shadow-md">
+            <div class="flex items-center justify-between mb-4 border-b border-slate-100 pb-3">
+                <h2 class="text-sm md:text-base font-bold text-slate-800 uppercase tracking-wide">
+                    <i class="fa-solid fa-arrow-trend-down text-rose-500 mr-2"></i> ministries / divisions with implementation deficits
+                </h2>
+            </div>
+            <div class="relative w-full overflow-x-auto min-h-[460px]">
+                <canvas id="chartUnderperformers" class="min-w-[850px] max-h-[460px]"></canvas>
+            </div>
+        </section>
+
+    </main>
+
+    <script>
+        // Safely register the DataLabels plugin to Chart.js globally
+        if (typeof ChartDataLabels !== 'undefined') {
+            Chart.register(ChartDataLabels);
+        } else {
+            console.error("ChartDataLabels failed to initialize. Please check network restrictions on CDNs.");
+        }
+
+        // CHART CONFIGURATION (Crimson red profile matching your third screenshot)
+        const ctx = document.getElementById('chartUnderperformers').getContext('2d');
+        const chart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: [
+                    'Bridges Division', 'Ministry of Women & Children Affairs', 'Primary & Mass Education Ministry', 'Ministry of Liberation War Affairs',
+                    'Ministry of Food', 'Internal Resources Division', 'Ministry of Cultural Affairs', 'Ministry of Public Administration',
+                    'Civil Aviation & Tourism Ministry', 'Prime Minister\'s Office', 'Public Security Division', 'Ministry of Land',
+                    'Bangladesh Public Service Commission', 'Election Commission Secretariat', 'Health Services Division', 'Health Education & Family Welfare Div.'
+                ],
+                datasets: [{
+                    data: [67.75, 64.38, 58.37, 58.10, 57.11, 56.58, 52.63, 52.43, 49.34, 42.27, 39.81, 37.46, 37.46, 32.02, 21.69, 15.36],
+                    backgroundColor: '#B91C1C', // Structural Crimson Red
+                    borderColor: '#991B1B',
+                    borderWidth: 1,
+                    barPercentage: 0.55
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false },
+                    tooltip: { enabled: true },
+                    datalabels: {
+                        color: '#ffffff', // Clean white typography inside bars
+                        anchor: 'end',
+                        align: 'bottom',
+                        offset: 10,
+                        rotation: -90, // Strict vertical transformation alignment to safeguard text width boundary constraints
+                        font: { weight: '600', size: 12 },
+                        formatter: (value) => value + '%'
+                    }
+                },
+                scales: {
+                    y: {
+                        min: 0,
+                        max: 80,
+                        ticks: { color: '#64748b', callback: (value) => value + '%' },
+                        grid: { color: '#e2e8f0', borderDash: [3, 3] }
+                    },
+                    x: {
+                        ticks: {
+                            color: '#1e293b',
+                            font: { size: 10, weight: '500' },
+                            maxRotation: 75,
+                            minRotation: 75
+                        },
+                        grid: { display: false }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
