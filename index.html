@@ -616,7 +616,7 @@
         </div>
     </div>
 
-    
+
     <script>
         fetch('other-cards.html') // Change this to match your presentation dashboard filename
             .then(response => {
@@ -654,6 +654,7 @@
     <script>
         // ========== DATA ==========
         const projectTypeData = { DPP: 1141, TAPP: 121, Feasibility: 22, OwnFund: 66 };
+        let redirectPath;
 
         const financialBreakdown = {
             Expenditure: { metric: "Total Expenditure", amount: "1,70,000 Cr", percentage: "68.4%", details: "68.4% of total allocation utilized. Major spending in Infrastructure & Energy sectors.", topProjects: ["National Highway Expansion (24,000 Cr)", "Power Grid Modernization (18,500 Cr)", "Rural Electrification (12,200 Cr)"] },
@@ -689,8 +690,7 @@
             const newBtn = redirectBtn.cloneNode(true);
             redirectBtn.parentNode.replaceChild(newBtn, redirectBtn);
             newBtn.addEventListener('click', () => {
-                if (redirectCallback) redirectCallback();
-                else alert("📋 Full list would open here.");
+                window.location.href = redirectPath;
             });
             document.getElementById('modalCloseSecondary').onclick = closeModal;
         }
@@ -733,6 +733,30 @@
                         const index = activeElements[0].index;
                         const labels = ['DPP', 'TAPP', 'Feasibility', 'Own Fund'];
                         const category = labels[index];
+
+                        switch (category) {
+                            case 'DPP':
+                                redirectPath = 'projects_list.html?type=DPP'
+                                break;
+
+                            case 'TAPP':
+                                redirectPath = 'projects_list.html?type=TAPP'
+                                break;
+
+                            case 'Feasibility':
+                                redirectPath = 'projects_list.html?type=Feasibility'
+                                break;
+
+                            case 'Own Fund':
+                                redirectPath = 'projects_list.html?type=Own Fund'
+                                break;
+
+                            default:
+                                // Fallback case if an element falls outside the array map bounds
+                                console.warn(`Unrecognized project category selection: ${category}`);
+                                break;
+                        }
+
                         const count = [1141, 121, 22, 66][index];
                         openModal(`${category} Projects`, `<div><strong>${category}</strong><br>Total projects: ${count}<br>Click redirect for full list.</div>`, () => alert(`🔁 Redirect to ${category} project list`));
                     }
@@ -781,6 +805,33 @@
                         const label = donutChart.data.labels[activeElements[0].index];
                         const key = { Infra: 'Infra', Energy: 'Energy', Transport: 'Transport', Health: 'Health', Education: 'Education' }[label];
                         const data = sectorDetails[key];
+
+                        switch (data?.name) {
+                            case "Infrastructure":
+                                redirectPath = 'projects_list.html?sector=Infrastructure';
+                                break;
+
+                            case "Energy":
+                                redirectPath = 'projects_list.html?sector=Energy';
+                                break;
+
+                            case "Transport":
+                                redirectPath = 'projects_list.html?sector=Transport';
+                                break;
+
+                            case "Health":
+                                redirectPath = 'projects_list.html?sector=Health';
+                                break;
+
+                            case "Education":
+                                redirectPath = 'projects_list.html?sector=Education';
+                                break;
+
+                            default:
+                                console.warn("Unknown sector profile selected.");
+                                break;
+                        }
+
                         const projList = data.projects.map(p => `<li><span class="detail-label">🏗️ ${p}</span></li>`).join('');
                         const content = `<div style="background:#f0f6fe; padding:10px; border-radius:14px;"><strong>${data.name}</strong><br>📊 ${data.totalCount} projects · ${data.allocation}</div><ul class="detail-list">${projList}</ul>`;
                         openModal(`${data.name} (${data.totalCount} projects)`, content, () => alert(`🔁 Redirect to ${data.name} dashboard`));
@@ -804,6 +855,29 @@
                 const range = el.getAttribute('data-range');
                 if (range && progressData[range]) {
                     const d = progressData[range];
+
+                    switch (d?.range) {
+                        case "0-30% Completion":
+                            redirectPath = 'projects_list.html?range=0-30%';
+                            break;
+
+                        case "30-60% Completion":
+                            redirectPath = 'projects_list.html?range=30-60%';
+                            break;
+
+                        case "60-80% Completion":
+                            redirectPath = 'projects_list.html?range=60-80%';
+                            break;
+
+                        case "80-100% Completion":
+                            redirectPath = 'projects_list.html?range=80-100%';
+                            break;
+
+                        default:
+                            console.warn("Unknown progress range metric selected.");
+                            break;
+                    }
+
                     const projList = d.projects.map(p => `<li><span class="detail-label">📊 ${p}</span></li>`).join('');
                     const content = `<div style="background:#f0f6fe; padding:10px; border-radius:14px;"><strong>${d.range}</strong><br>📋 ${d.totalCount} projects · ${d.description}</div><ul class="detail-list">${projList}</ul>`;
                     openModal(`${d.range} (${d.totalCount} projects)`, content, () => alert(`🔁 Redirect to ${d.range} project list`));

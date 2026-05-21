@@ -1,0 +1,981 @@
+<!-- project_list.html -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Project List</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #f4f7fb;
+            color: #123041;
+            padding: 24px;
+        }
+
+        .page-container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .top-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .header-left h1 {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: #0f3b4f;
+        }
+
+        .header-left p {
+            font-size: 0.9rem;
+            color: #67859c;
+            margin-top: 4px;
+        }
+
+        .back-btn {
+            background: white;
+            border: 1px solid #d9e4ee;
+            padding: 10px 16px;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s;
+            color: #0f3b4f;
+        }
+
+        .back-btn:hover {
+            background: #eef4f9;
+        }
+
+        .filter-bar {
+            background: white;
+            border-radius: 18px;
+            padding: 18px;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 14px;
+            flex-wrap: wrap;
+            border: 1px solid #e5edf5;
+        }
+
+        .filter-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .filter-badge {
+            padding: 8px 14px;
+            border-radius: 30px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: white;
+        }
+
+        .badge-red {
+            background: #ef4444;
+        }
+
+        .badge-orange {
+            background: #f59e0b;
+        }
+
+        .badge-green {
+            background: #10b981;
+        }
+
+        .badge-blue {
+            background: #3b82b6;
+        }
+
+        .badge-purple {
+            background: #8b5cf6;
+        }
+
+        .project-count {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #49657b;
+        }
+
+        .search-box {
+            position: relative;
+        }
+
+        .search-box input {
+            width: 280px;
+            padding: 11px 14px 11px 40px;
+            border-radius: 12px;
+            border: 1px solid #d8e3ed;
+            outline: none;
+            font-size: 0.9rem;
+            background: #f9fbfd;
+        }
+
+        .search-box i {
+            position: absolute;
+            left: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #7d98ac;
+        }
+
+        .table-wrapper {
+            background: white;
+            border-radius: 22px;
+            overflow: hidden;
+            border: 1px solid #e6edf5;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        thead {
+            background: #f5f9fd;
+        }
+
+        thead th {
+            text-align: left;
+            padding: 18px 20px;
+            font-size: 0.78rem;
+            font-weight: 700;
+            color: #57738a;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border-bottom: 1px solid #e4edf5;
+        }
+
+        tbody tr {
+            transition: 0.2s;
+            border-bottom: 1px solid #edf3f8;
+        }
+
+        tbody tr:hover {
+            background: #f8fbfe;
+        }
+
+        tbody td {
+            padding: 18px 20px;
+            font-size: 0.88rem;
+            color: #23465d;
+            font-weight: 500;
+        }
+
+        .project-name {
+            font-weight: 700;
+            color: #0f3b4f;
+        }
+
+        .status-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 7px 12px;
+            border-radius: 30px;
+            font-size: 0.74rem;
+            font-weight: 700;
+            color: white;
+        }
+
+        .status-red {
+            background: #ef4444;
+        }
+
+        .status-orange {
+            background: #f59e0b;
+        }
+
+        .status-green {
+            background: #10b981;
+        }
+
+        .status-blue {
+            background: #3b82b6;
+        }
+
+        .view-btn {
+            background: #0f3b4f;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            padding: 8px 14px;
+            cursor: pointer;
+            font-size: 0.78rem;
+            font-weight: 600;
+            transition: 0.2s;
+        }
+
+        .view-btn:hover {
+            background: #174e68;
+        }
+
+        .pagination {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 18px 20px;
+            background: #fafcfe;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .pagination-info {
+            font-size: 0.85rem;
+            color: #68849a;
+            font-weight: 500;
+        }
+
+        .pagination-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .page-btn {
+            border: 1px solid #d9e5ee;
+            background: white;
+            padding: 8px 14px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 600;
+            color: #123041;
+        }
+
+        .page-btn.active {
+            background: #0f3b4f;
+            color: white;
+            border-color: #0f3b4f;
+        }
+
+        @media(max-width: 900px) {
+
+            .table-wrapper {
+                overflow-x: auto;
+            }
+
+            table {
+                min-width: 900px;
+            }
+        }
+
+        @media(max-width: 640px) {
+
+            body {
+                padding: 14px;
+            }
+
+            .top-header {
+                align-items: flex-start;
+            }
+
+            .search-box input {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="page-container">
+
+        <div class="top-header">
+            <div class="header-left">
+                <h1 id="pageTitle">Projects List</h1>
+            </div>
+
+            <button class="back-btn" onclick="window.location.href='index.html'">
+                <i class="fas fa-arrow-left"></i> Back to Dashboard
+            </button>
+        </div>
+
+        <div class="filter-bar">
+
+            <div class="filter-left">
+                <div class="filter-badge badge-red" id="filterBadge">
+                    0-30% Completion
+                </div>
+
+                <div class="project-count" id="projectCount">
+                    250 Projects Found
+                </div>
+            </div>
+
+            <div class="search-box">
+                <i class="fas fa-search"></i>
+                <input type="text" id="searchInput" placeholder="Search project...">
+            </div>
+
+        </div>
+
+        <div class="table-wrapper">
+
+            <table>
+
+                <thead>
+                    <tr>
+                        <th>
+                            <div>Project Name</div>
+                            <div>PD Name</div>
+                        </th>
+                        <th>Project Type</th>
+                        <th>Sector</th>
+                        <th>Ministry</th>
+                        <th>Estimated Cost</th>
+                        <th>Completion</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+
+                <tbody id="projectTableBody"></tbody>
+
+            </table>
+
+            <div class="pagination">
+                <div class="pagination-info">
+                    Showing 1-10 of 250 projects
+                </div>
+
+                <div class="pagination-buttons">
+                    <button class="page-btn">Previous</button>
+                    <button class="page-btn active">1</button>
+                    <button class="page-btn">2</button>
+                    <button class="page-btn">3</button>
+                    <button class="page-btn">Next</button>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <script>
+
+        // =========================
+        // GET FILTER FROM URL
+        // =========================
+
+        const urlParams = new URLSearchParams(window.location.search);
+        const selectedRange = urlParams.get('range');
+        const selectedType = urlParams.get('type');
+        const selectedSector = urlParams.get('sector');
+        const selectedMinistry = urlParams.get('ministry');
+
+        // =========================
+        // STAGE METADATA CONFIG
+        // =========================
+        const stageMetadata = {
+            "0-30%": { count: 250, desc: "Early stage - Planning & initial implementation" },
+            "30-60%": { count: 400, desc: "Mid stage - Active implementation" },
+            "60-80%": { count: 450, desc: "Advanced stage - Nearing completion" },
+            "80-100%": { count: 250, desc: "Final stage - Handover & closure" }
+        };
+
+        const typeMetadata = {
+            "DPP": { count: 520, desc: "Development Projects" },
+            "TAPP": { count: 380, desc: "Technical Assistance Projects" },
+            "Feasibility": { count: 270, desc: "Feasibility Study Projects" },
+            "Own Fund": { count: 180, desc: "Own Funded Projects" }
+        };
+
+        const sectorMetadata = {
+            "Infrastructure": { count: 14, desc: "Infrastructure Sector" },
+            "Education": { count: 3, desc: "Education Sector" },
+            "Health": { count: 4, desc: "Health Sector" },
+            "Transport": { count: 9, desc: "Transport Sector" },
+            "Energy": { count: 12, desc: "Energy Sector" }
+        };
+
+        // =========================
+        // DUMMY DATA
+        // =========================
+
+        const allProjects = [
+            // ==========================================
+            // 0-30% Completion: Early Stage (10 Projects)
+            // ==========================================
+            {
+                name: "Smart City Master Plan",
+                sector: "Infrastructure",
+                ministry: "Local Government",
+                estimatedCost: "12,500 Cr",
+                completion: "18%",
+                range: "0-30%",
+                pdName: "Engr. MD. Rafiqul Islam",
+                projectType: "DPP"
+            },
+            {
+                name: "Coastal Protection Study",
+                sector: "Infrastructure",
+                ministry: "Water Resources",
+                estimatedCost: "4,800 Cr",
+                completion: "22%",
+                range: "0-30%",
+                pdName: "Dr. Tanzina Ahmed",
+                projectType: "TAPP"
+            },
+            {
+                name: "Digital Infrastructure Blueprint",
+                sector: "Infrastructure",
+                ministry: "ICT Division",
+                estimatedCost: "8,000 Cr",
+                completion: "28%",
+                range: "0-30%",
+                pdName: "Mustafa Zaman",
+                projectType: "Feasibility"
+            },
+            {
+                name: "Railway Feasibility",
+                sector: "Transport",
+                ministry: "Railways",
+                estimatedCost: "6,500 Cr",
+                completion: "12%",
+                range: "0-30%",
+                pdName: "Asif Chowdhury",
+                projectType: "Own Fund"
+            },
+            {
+                name: "Urban Development Framework",
+                sector: "Infrastructure",
+                ministry: "Housing",
+                estimatedCost: "5,700 Cr",
+                completion: "30%",
+                range: "0-30%",
+                pdName: "Sultana Razia",
+                projectType: "DPP"
+            },
+            {
+                name: "Water Treatment Design",
+                sector: "Infrastructure",
+                ministry: "Local Government",
+                estimatedCost: "7,200 Cr",
+                completion: "15%",
+                range: "0-30%",
+                pdName: "Engr. Hasan Ali",
+                projectType: "TAPP"
+            },
+            {
+                name: "Renewable Energy Roadmap",
+                sector: "Energy",
+                ministry: "Power Division",
+                estimatedCost: "9,000 Cr",
+                completion: "8%",
+                range: "0-30%",
+                pdName: "Farhana Yasmin",
+                projectType: "Feasibility"
+            },
+            {
+                name: "Agricultural Tech Initiative",
+                sector: "Energy",
+                ministry: "Agriculture",
+                estimatedCost: "3,100 Cr",
+                completion: "25%",
+                range: "0-30%",
+                pdName: "Dr. Ahsan Ullah",
+                projectType: "Own Fund"
+            },
+            {
+                name: "E-Governance Portal Upgrade",
+                sector: "Infrastructure",
+                ministry: "ICT Division",
+                estimatedCost: "1,500 Cr",
+                completion: "19%",
+                range: "0-30%",
+                pdName: "Nusrat Jahan",
+                projectType: "DPP"
+            },
+            {
+                name: "Sewerage Network Planning",
+                sector: "Infrastructure",
+                ministry: "Local Government",
+                estimatedCost: "4,200 Cr",
+                completion: "5%",
+                range: "0-30%",
+                pdName: "Engr. Tariqul Islam",
+                projectType: "TAPP"
+            },
+
+            // ==========================================
+            // 30-60% Completion: Mid Stage (10 Projects)
+            // ==========================================
+            {
+                name: "Metro Rail Phase 2",
+                sector: "Transport",
+                ministry: "Road Transport",
+                estimatedCost: "24,000 Cr",
+                completion: "45%",
+                range: "30-60%",
+                pdName: "M. A. N. Siddique",
+                projectType: "DPP"
+            },
+            {
+                name: "Rural Electrification",
+                sector: "Energy",
+                ministry: "Power Division",
+                estimatedCost: "10,000 Cr",
+                completion: "55%",
+                range: "30-60%",
+                pdName: "Md. Helal Uddin",
+                projectType: "TAPP"
+            },
+            {
+                name: "School Digitalization",
+                sector: "Education",
+                ministry: "Education",
+                estimatedCost: "3,500 Cr",
+                completion: "52%",
+                range: "30-60%",
+                pdName: "Prof. Shaheen Mahmud",
+                projectType: "Feasibility"
+            },
+            {
+                name: "Highway Expansion Phase 2",
+                sector: "Infrastructure",
+                ministry: "Road Transport",
+                estimatedCost: "18,500 Cr",
+                completion: "41%",
+                range: "30-60%",
+                pdName: "Engr. Amanullah Khan",
+                projectType: "Own Fund"
+            },
+            {
+                name: "Healthcare Equipment Rollout",
+                sector: "Health",
+                ministry: "Health",
+                estimatedCost: "6,200 Cr",
+                completion: "38%",
+                range: "30-60%",
+                pdName: "Dr. M. A. Faiz",
+                projectType: "DPP"
+            },
+            {
+                name: "Bridge Construction Mid-phase",
+                sector: "Infrastructure",
+                ministry: "Road Transport",
+                estimatedCost: "8,900 Cr",
+                completion: "48%",
+                range: "30-60%",
+                pdName: "Engr. Quazi Shahriar",
+                projectType: "TAPP"
+            },
+            {
+                name: "Irrigation Canal Development",
+                sector: "Energy",
+                ministry: "Water Resources",
+                estimatedCost: "5,100 Cr",
+                completion: "59%",
+                range: "30-60%",
+                pdName: "Md. Sarafat Hossain",
+                projectType: "Feasibility"
+            },
+            {
+                name: "District Data Centers",
+                sector: "Transport",
+                ministry: "ICT Division",
+                estimatedCost: "4,700 Cr",
+                completion: "34%",
+                range: "30-60%",
+                pdName: "Saiful Islam",
+                projectType: "Own Fund"
+            },
+            {
+                name: "Secondary Schools Renovation",
+                sector: "Education",
+                ministry: "Education",
+                estimatedCost: "2,800 Cr",
+                completion: "47%",
+                range: "30-60%",
+                pdName: "Zeenat Rahman",
+                projectType: "DPP"
+            },
+            {
+                name: "Submersible Road Construction",
+                sector: "Infrastructure",
+                ministry: "Local Government",
+                estimatedCost: "3,900 Cr",
+                completion: "50%",
+                range: "30-60%",
+                pdName: "Engr. Monirul Zaman",
+                projectType: "TAPP"
+            },
+
+            // ==========================================
+            // 60-80% Completion: Advanced Stage (10 Projects)
+            // ==========================================
+            {
+                name: "Power Grid Modernization",
+                sector: "Energy",
+                ministry: "Power Division",
+                estimatedCost: "16,500 Cr",
+                completion: "72%",
+                range: "60-80%",
+                pdName: "Md. Shafiullah",
+                projectType: "DPP"
+            },
+            {
+                name: "Port Expansion Project",
+                sector: "Transport",
+                ministry: "Shipping",
+                estimatedCost: "11,000 Cr",
+                completion: "78%",
+                range: "60-80%",
+                pdName: "Rear Admiral Mohammad Sohail",
+                projectType: "TAPP"
+            },
+            {
+                name: "Metro Rail Phase 1",
+                sector: "Transport",
+                ministry: "Road Transport",
+                estimatedCost: "22,000 Cr",
+                completion: "65%",
+                range: "60-80%",
+                pdName: "M. A. N. Siddique",
+                projectType: "Feasibility"
+            },
+            {
+                name: "Hospital Infrastructure Upgrade",
+                sector: "Health",
+                ministry: "Health",
+                estimatedCost: "9,300 Cr",
+                completion: "74%",
+                range: "60-80%",
+                pdName: "Dr. Abul Bashar",
+                projectType: "Own Fund"
+            },
+            {
+                name: "University Campus Development",
+                sector: "Education",
+                ministry: "Education",
+                estimatedCost: "7,800 Cr",
+                completion: "68%",
+                range: "60-80%",
+                pdName: "Prof. Dr. M. Lutfar Rahman",
+                projectType: "DPP"
+            },
+            {
+                name: "Telecom Network Enhancement",
+                sector: "Transport",
+                ministry: "ICT Division",
+                estimatedCost: "5,500 Cr",
+                completion: "79%",
+                range: "60-80%",
+                pdName: "Rashedul Hasan",
+                projectType: "TAPP"
+            },
+            {
+                name: "Industrial Zone Expressway",
+                sector: "Transport",
+                ministry: "Road Transport",
+                estimatedCost: "14,200 Cr",
+                completion: "63%",
+                range: "60-80%",
+                pdName: "Engr. Mahbubur Rahman",
+                projectType: "Feasibility"
+            },
+            {
+                name: "Cross-Country Gas Pipeline",
+                sector: "Energy",
+                ministry: "Power Division",
+                estimatedCost: "12,100 Cr",
+                completion: "71%",
+                range: "60-80%",
+                pdName: "Engr. Ali Mohammad",
+                projectType: "Own Fund"
+            },
+            {
+                name: "Embankment Rehabilitation",
+                sector: "Infrastructure",
+                ministry: "Water Resources",
+                estimatedCost: "6,400 Cr",
+                completion: "76%",
+                range: "60-80%",
+                pdName: "Md. Nurul Amin",
+                projectType: "DPP"
+            },
+            {
+                name: "High-Tech Park Phase 1",
+                sector: "Transport",
+                ministry: "ICT Division",
+                estimatedCost: "8,700 Cr",
+                completion: "66%",
+                range: "60-80%",
+                pdName: "A.N.M. Shafiqul Islam",
+                projectType: "TAPP"
+            },
+
+            // ==========================================
+            // 80-100% Completion: Final Stage (10 Projects)
+            // ==========================================
+            {
+                name: "Water Supply Scheme",
+                sector: "Health",
+                ministry: "Health",
+                estimatedCost: "2,500 Cr",
+                completion: "92%",
+                range: "80-100%",
+                pdName: "Engr. AKM Shahid Uddin",
+                projectType: "DPP"
+            },
+            {
+                name: "Road Rehabilitation Project",
+                sector: "Infrastructure",
+                ministry: "Road Transport",
+                estimatedCost: "4,000 Cr",
+                completion: "88%",
+                range: "80-100%",
+                pdName: "Engr. Sabuj Uddin",
+                projectType: "TAPP"
+            },
+            {
+                name: "Community Health Center Network",
+                sector: "Health",
+                ministry: "Health",
+                estimatedCost: "3,200 Cr",
+                completion: "95%",
+                range: "80-100%",
+                pdName: "Dr. Samiul Islam",
+                projectType: "Feasibility"
+            },
+            {
+                name: "Vocational Training Completion",
+                sector: "Energy",
+                ministry: "Education",
+                estimatedCost: "1,800 Cr",
+                completion: "84%",
+                range: "80-100%",
+                pdName: "Md. Bablur Rahman",
+                projectType: "Own Fund"
+            },
+            {
+                name: "Rural Bridge Program Final Phase",
+                sector: "Infrastructure",
+                ministry: "Local Government",
+                estimatedCost: "5,300 Cr",
+                completion: "91%",
+                range: "80-100%",
+                pdName: "Engr. AKM Luthfur Rahman",
+                projectType: "DPP"
+            },
+            {
+                name: "District Court Digitization",
+                sector: "Transport",
+                ministry: "ICT Division",
+                estimatedCost: "2,100 Cr",
+                completion: "97%",
+                range: "80-100%",
+                pdName: "Mirza Tariq Beg",
+                projectType: "TAPP"
+            },
+            {
+                name: "Surface Water Treatment Plant",
+                sector: "Energy",
+                ministry: "Water Resources",
+                estimatedCost: "6,800 Cr",
+                completion: "86%",
+                range: "80-100%",
+                pdName: "Engr. Shamsul Alam",
+                projectType: "Feasibility"
+            },
+            {
+                name: "Solar Street Light Installation",
+                sector: "Energy",
+                ministry: "Local Government",
+                estimatedCost: "1,200 Cr",
+                completion: "99%",
+                range: "80-100%",
+                pdName: "Md. Shahinur Rahman",
+                projectType: "Own Fund"
+            },
+            {
+                name: "Flyover Construction Final Handover",
+                sector: "Transport",
+                ministry: "Road Transport",
+                estimatedCost: "7,500 Cr",
+                completion: "94%",
+                range: "80-100%",
+                pdName: "Engr. Shihab Akhtar",
+                projectType: "DPP"
+            },
+            {
+                name: "Primary Health Supply Chain",
+                sector: "Energy",
+                ministry: "Health",
+                estimatedCost: "2,900 Cr",
+                completion: "89%",
+                range: "80-100%",
+                pdName: "Dr. Niaz Ahmed",
+                projectType: "TAPP"
+            }
+        ];
+
+        // =========================
+        // FILTER PROJECTS DYNAMICALLY
+        // =========================
+
+        let filteredProjects = [];
+        let currentMeta = { count: 0, desc: "" };
+        let badgeText = "";
+        let badgeColorClass = "badge-blue";
+
+        if (selectedSector) {
+            // Handle Sector Filter Router
+            filteredProjects = allProjects.filter(project => project.sector === selectedSector);
+            currentMeta = sectorMetadata[selectedSector] || { count: filteredProjects.length, desc: "" };
+            badgeText = `${selectedSector} Sector`;
+
+            // Map color styles dynamically based on selection requirement
+            const sectorColorMap = {
+                "Infrastructure": "badge-blue",
+                "Education": "badge-purple", // Make sure to add .badge-purple to your CSS if missing
+                "Health": "badge-red",
+                "Transport": "badge-green",
+                "Energy": "badge-orange"     // Using theme orange for yellow/gold accent matching
+            };
+            badgeColorClass = sectorColorMap[selectedSector] || "badge-blue";
+
+        } else if (selectedType) {
+            // Handle Project Type Filter Router
+            filteredProjects = allProjects.filter(project => project.projectType === selectedType);
+            currentMeta = typeMetadata[selectedType] || { count: filteredProjects.length, desc: "" };
+            badgeText = `${selectedType} Type`;
+            badgeColorClass = "badge-blue";
+
+        } else {
+            // Default Fallback: Handle Range Completion Filter Router
+            const activeRange = selectedRange || '0-30%';
+            filteredProjects = allProjects.filter(project => project.range === activeRange);
+            currentMeta = stageMetadata[activeRange] || { count: filteredProjects.length, desc: "" };
+            badgeText = `${activeRange} Completion`;
+
+            const badgeMap = {
+                "0-30%": "badge-red",
+                "30-60%": "badge-orange",
+                "60-80%": "badge-green",
+                "80-100%": "badge-blue"
+            };
+            badgeColorClass = badgeMap[activeRange] || "badge-red";
+        }
+
+        filteredProjects.sort((a, b) => parseInt(a.completion) - parseInt(b.completion));
+
+        // =========================
+        // UPDATE BADGES & TITLES
+        // =========================
+        const badge = document.getElementById('filterBadge');
+        badge.className = `filter-badge ${badgeColorClass}`;
+        badge.innerText = badgeText;
+
+        if (selectedSector) {
+            document.getElementById('pageTitle').innerText = `${selectedSector} Projects`;
+        } else if (selectedType) {
+            document.getElementById('pageTitle').innerText = `${selectedType} Project List`;
+        } else {
+            document.getElementById('pageTitle').innerText = `${selectedRange || '0-30%'} Completion Projects`;
+        }
+
+        // 3. Update Header Subtitle with full dynamic meta counts and descriptions
+        // 3. Update Header Subtitle with matching container style
+        document.getElementById('projectCount').innerHTML = `
+        <span style="background: #eff3f8; color: #1a4d66; padding: 6px 16px; border-radius: 30px; font-weight: 600; font-size: 0.85rem; display: inline-flex; align-items: center;">
+            ${currentMeta.count} projects · ${currentMeta.desc}
+        </span>
+        `;
+
+        // 4. Update Table Bottom Paginator Information Text dynamically
+        const totalCountText = document.querySelector('.pagination-info');
+        if (totalCountText) {
+            totalCountText.innerText = `Showing 1-10 of ${currentMeta.count} projects`;
+        }
+
+        // =========================
+        // RENDER TABLE
+        // =========================
+
+        const tableBody = document.getElementById('projectTableBody');
+
+        function renderProjects(projects) {
+
+            tableBody.innerHTML = '';
+
+            projects.forEach(project => {
+
+                let statusClass = "status-red";
+
+                if (project.range === "30-60%") {
+                    statusClass = "status-orange";
+                }
+                else if (project.range === "60-80%") {
+                    statusClass = "status-green";
+                }
+                else if (project.range === "80-100%") {
+                    statusClass = "status-blue";
+                }
+
+                tableBody.innerHTML += `
+                <tr>
+                        <td>
+                            <div class="project-name">${project.name}</div>
+                            <div>${project.pdName}</div>
+                        </td>
+                        <td>${project.projectType}</td>
+                        <td>${project.sector}</td>
+                        <td>${project.ministry}</td>
+                        <td>${project.estimatedCost}</td>
+                        <td>${project.completion}</td>
+                        <td>
+                            <button class="view-btn">
+                                View Details
+                            </button>
+                        </td>
+                    </tr>
+                `;
+            });
+        }
+
+        renderProjects(filteredProjects);
+
+        // =========================
+        // SEARCH
+        // =========================
+
+        document.getElementById('searchInput')
+            .addEventListener('keyup', function () {
+
+                const value = this.value.toLowerCase();
+
+                const searchedProjects = filteredProjects.filter(project =>
+                    project.name.toLowerCase().includes(value)
+                );
+
+                renderProjects(searchedProjects);
+            });
+
+    </script>
+
+</body>
+
+</html>
