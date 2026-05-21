@@ -1,10 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PM Dashboard</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
     <style>
@@ -35,14 +38,15 @@
             background: white;
             border-radius: 20px;
             padding: 16px 18px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.03), 0 1px 2px rgba(0,0,0,0.02);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03), 0 1px 2px rgba(0, 0, 0, 0.02);
             border: 1px solid #e9edf2;
             transition: all 0.2s ease;
             display: flex;
             flex-direction: column;
         }
+
         .dashboard-card:hover {
-            box-shadow: 0 8px 20px rgba(0,0,0,0.06);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
             transform: translateY(-1px);
         }
 
@@ -53,6 +57,7 @@
             margin-bottom: 12px;
             flex-wrap: wrap;
         }
+
         .card-title {
             font-size: 0.65rem;
             text-transform: uppercase;
@@ -66,6 +71,7 @@
             align-items: center;
             gap: 6px;
         }
+
         .trend-badge {
             font-size: 0.6rem;
             background: #e2f0e6;
@@ -74,36 +80,43 @@
             border-radius: 30px;
             font-weight: 600;
         }
+
         .kpi-number {
             font-size: 1.8rem;
             font-weight: 800;
             color: #0f3b4f;
             line-height: 1;
         }
+
         .kpi-sub {
             font-size: 0.65rem;
             font-weight: 500;
             color: #6c8eaa;
         }
+
         .stat-item {
             display: flex;
             justify-content: space-between;
             font-size: 0.62rem;
             margin-bottom: 5px;
         }
+
         .stat-label {
             font-weight: 500;
             color: #3b5e7a;
         }
+
         .stat-value {
             font-weight: 700;
             color: #144d66;
         }
+
         .divider-light {
             height: 1px;
             background: #eef2f8;
             margin: 8px 0;
         }
+
         .divider-dashed {
             height: 1px;
             background: #e2e8f0;
@@ -117,9 +130,11 @@
             align-items: center;
             gap: 12px;
         }
+
         .card-left {
             flex: 1;
         }
+
         /* Card 1 right column fixed width 180px */
         .card-right-180 {
             width: 180px;
@@ -129,9 +144,11 @@
         /* Horizontal bar chart for card 1 - full size */
         .horizontal-bar-container {
             width: 100%;
-            height: 130px;  /* increased height to fill space */
+            height: 130px;
+            /* increased height to fill space */
             margin-top: 4px;
         }
+
         canvas.horizontal-bar {
             width: 100%;
             height: 100%;
@@ -152,6 +169,7 @@
             margin-top: 8px;
             gap: 12px;
         }
+
         .ministry-stat-item {
             text-align: center;
             flex: 1;
@@ -160,29 +178,46 @@
             cursor: pointer;
             transition: transform 0.1s;
         }
+
         .ministry-stat-item:hover {
             transform: scale(1.02);
         }
+
         .ministry-stat-item.above {
             background: #e8f5e9;
             border-left: 3px solid #2e7d32;
         }
+
         .ministry-stat-item.below {
             background: #ffebee;
             border-left: 3px solid #c62828;
         }
+
         .ministry-stat-value {
             font-weight: 800;
             font-size: 0.75rem;
         }
-        .above .ministry-stat-value { color: #2e7d32; }
-        .below .ministry-stat-value { color: #c62828; }
+
+        .above .ministry-stat-value {
+            color: #2e7d32;
+        }
+
+        .below .ministry-stat-value {
+            color: #c62828;
+        }
+
         .ministry-stat-label {
             font-size: 0.55rem;
             font-weight: 600;
         }
-        .above .ministry-stat-label { color: #2e7d32; }
-        .below .ministry-stat-label { color: #c62828; }
+
+        .above .ministry-stat-label {
+            color: #2e7d32;
+        }
+
+        .below .ministry-stat-label {
+            color: #c62828;
+        }
 
         /* Donut */
         .donut-wrapper {
@@ -195,6 +230,7 @@
         .progress-chart {
             margin: 4px 0 8px;
         }
+
         .progress-stack {
             display: flex;
             height: 27px;
@@ -203,6 +239,7 @@
             cursor: pointer;
             margin-bottom: 0;
         }
+
         .progress-segment {
             display: flex;
             align-items: center;
@@ -211,17 +248,20 @@
             font-weight: 700;
             color: white;
             transition: opacity 0.2s;
-            text-shadow: 0 0 2px rgba(0,0,0,0.2);
+            text-shadow: 0 0 2px rgba(0, 0, 0, 0.2);
         }
+
         .progress-segment:hover {
             opacity: 0.85;
         }
+
         .progress-labels {
             display: flex;
             justify-content: space-between;
             margin-top: 6px;
             gap: 8px;
         }
+
         .progress-label-item {
             flex: 1;
             text-align: center;
@@ -232,9 +272,11 @@
             border-radius: 8px;
             transition: background 0.2s;
         }
+
         .progress-label-item:hover {
             background: #eef2fa;
         }
+
         .progress-label-color {
             display: inline-block;
             width: 10px;
@@ -250,6 +292,7 @@
             gap: 12px;
             margin-top: 8px;
         }
+
         .overrun-item {
             flex: 1;
             background: #fef5e8;
@@ -259,10 +302,12 @@
             cursor: pointer;
             transition: transform 0.1s;
         }
+
         .overrun-item:hover {
             transform: scale(1.02);
             background: #fef0e0;
         }
+
         .overrun-main {
             display: flex;
             align-items: baseline;
@@ -270,16 +315,19 @@
             gap: 6px;
             margin-bottom: 4px;
         }
+
         .overrun-number {
             font-size: 1.2rem;
             font-weight: 800;
             color: #c0392b;
         }
+
         .overrun-label {
             font-size: 0.6rem;
             font-weight: 600;
             color: #5e7f9c;
         }
+
         .overrun-compare {
             font-size: 0.55rem;
             color: #c0392b;
@@ -293,7 +341,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0,0,0,0.5);
+            background: rgba(0, 0, 0, 0.5);
             backdrop-filter: blur(3px);
             display: flex;
             align-items: center;
@@ -303,23 +351,27 @@
             opacity: 0;
             transition: all 0.2s ease;
         }
+
         .modal-overlay.active {
             visibility: visible;
             opacity: 1;
         }
+
         .modal-container {
             background: white;
             width: 90%;
             max-width: 520px;
             border-radius: 28px;
             padding: 22px;
-            box-shadow: 0 20px 35px rgba(0,0,0,0.2);
+            box-shadow: 0 20px 35px rgba(0, 0, 0, 0.2);
             transform: scale(0.95);
             transition: transform 0.2s ease;
         }
+
         .modal-overlay.active .modal-container {
             transform: scale(1);
         }
+
         .modal-header {
             display: flex;
             justify-content: space-between;
@@ -328,11 +380,13 @@
             border-bottom: 2px solid #eef2f8;
             padding-bottom: 10px;
         }
+
         .modal-header h3 {
             font-size: 1.1rem;
             font-weight: 700;
             color: #0b2b3b;
         }
+
         .close-modal {
             background: none;
             border: none;
@@ -340,31 +394,37 @@
             cursor: pointer;
             color: #8aa9c2;
         }
+
         .modal-body {
             max-height: 55vh;
             overflow-y: auto;
         }
+
         .detail-list {
             list-style: none;
             padding: 0;
         }
+
         .detail-list li {
             padding: 8px 0;
             border-bottom: 1px solid #f0f4f9;
             display: flex;
             justify-content: space-between;
         }
+
         .detail-label {
             font-weight: 600;
             color: #2c5a74;
             font-size: 0.8rem;
         }
+
         .redirect-actions {
             margin-top: 18px;
             display: flex;
             gap: 10px;
             justify-content: flex-end;
         }
+
         .btn-redirect {
             background: #0f3b4f;
             color: white;
@@ -375,334 +435,404 @@
             font-size: 0.7rem;
             cursor: pointer;
         }
+
         .btn-secondary {
             background: #eef2f8;
             color: #2c5a74;
         }
 
         @media (max-width: 1100px) {
-            .card-grid { grid-template-columns: repeat(2, 1fr); }
+            .card-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
         }
+
         @media (max-width: 640px) {
-            .card-grid { grid-template-columns: 1fr; }
-            body { padding: 16px; }
-            .card-with-right-chart { flex-direction: column; align-items: stretch; }
-            .card-right-180 { width: auto; }
+            .card-grid {
+                grid-template-columns: 1fr;
+            }
+
+            body {
+                padding: 16px;
+            }
+
+            .card-with-right-chart {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .card-right-180 {
+                width: auto;
+            }
         }
     </style>
 </head>
+
 <body>
-<div class="dashboard-container">
-    <div class="card-grid">
-        <!-- CARD 1: TOTAL PROJECTS - horizontal bar chart (legend removed) -->
-        <div class="dashboard-card">
-            <div class="card-header">
-                <span class="card-title"><i class="fas fa-folder-open"></i> TOTAL PROJECTS</span>
-                <span class="trend-badge"><i class="fas fa-arrow-down"></i> -12.38% vs last year</span>
-            </div>
-            <div class="card-with-right-chart">
-                <div class="card-left">
-                    <div class="kpi-number">1,350</div>
-                    <div class="kpi-sub">total projects</div>
+    <div class="dashboard-container">
+        <div class="card-grid">
+            <!-- CARD 1: TOTAL PROJECTS - horizontal bar chart (legend removed) -->
+            <div class="dashboard-card">
+                <div class="card-header">
+                    <span class="card-title"><i class="fas fa-folder-open"></i> TOTAL PROJECTS</span>
+                    <span class="trend-badge"><i class="fas fa-arrow-down"></i> -12.38% vs last year</span>
                 </div>
-                <div class="card-right-180">
-                    <div class="horizontal-bar-container">
-                        <canvas id="categoryBarChart" width="180" height="130" style="width:180px; height:130px;"></canvas>
+                <div class="card-with-right-chart">
+                    <div class="card-left">
+                        <div class="kpi-number">1,350</div>
+                        <div class="kpi-sub">total projects</div>
                     </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- CARD 2: NATIONAL AVERAGE -->
-        <div class="dashboard-card">
-            <div class="card-header">
-                <div>
-                    <span class="card-title"><i class="fas fa-chart-line"></i> NATIONAL AVERAGE</span>
-                </div>
-                <span class="trend-badge"><i class="fas fa-arrow-down"></i> -10.38% vs last year</span>
-            </div>
-            <div class="card-with-right-chart">
-                <div class="card-left">
-                    <div class="kpi-number">68.4%</div>
-                    <div class="stat-item"><span class="stat-label"><i class="fas fa-chart-pie"></i> Total Allocation</span><span class="stat-value">2,48,500 Cr</span></div>
-                    <div class="stat-item"><span class="stat-label"><i class="fas fa-chart-line"></i> Total Expenditure</span><span class="stat-value">1,70,000 Cr</span></div>
-                    <div class="divider-light"></div>
-                    <div class="ministry-stats">
-                        <div class="ministry-stat-item above" id="ministryAbove">
-                            <div class="ministry-stat-value"><i class="fas fa-arrow-up"></i> 41</div>
-                            <div class="ministry-stat-label">Ministries above average</div>
-                        </div>
-                        <div class="ministry-stat-item below" id="ministryBelow">
-                            <div class="ministry-stat-value"><i class="fas fa-arrow-down"></i> 16</div>
-                            <div class="ministry-stat-label">Ministries below average</div>
+                    <div class="card-right-180">
+                        <div class="horizontal-bar-container">
+                            <canvas id="categoryBarChart" width="180" height="130"
+                                style="width:180px; height:130px;"></canvas>
                         </div>
                     </div>
                 </div>
-                <div class="card-right">
-                    <div class="gauge-wrapper">
-                        <canvas id="gaugeChart" width="100" height="100" style="width:100px; height:100px;"></canvas>
+            </div>
+
+            <!-- CARD 2: NATIONAL AVERAGE -->
+            <div class="dashboard-card">
+                <div class="card-header">
+                    <div>
+                        <span class="card-title"><i class="fas fa-chart-line"></i> NATIONAL AVERAGE</span>
+                    </div>
+                    <span class="trend-badge"><i class="fas fa-arrow-down"></i> -10.38% vs last year</span>
+                </div>
+                <div class="card-with-right-chart">
+                    <div class="card-left">
+                        <div class="kpi-number">68.4%</div>
+                        <div class="stat-item"><span class="stat-label"><i class="fas fa-chart-pie"></i> Total
+                                Allocation</span><span class="stat-value">2,48,500 Cr</span></div>
+                        <div class="stat-item"><span class="stat-label"><i class="fas fa-chart-line"></i> Total
+                                Expenditure</span><span class="stat-value">1,70,000 Cr</span></div>
+                        <div class="divider-light"></div>
+                        <div class="ministry-stats">
+                            <div class="ministry-stat-item above" id="ministryAbove">
+                                <div class="ministry-stat-value"><i class="fas fa-arrow-up"></i> 41</div>
+                                <div class="ministry-stat-label">Ministries above average</div>
+                            </div>
+                            <div class="ministry-stat-item below" id="ministryBelow">
+                                <div class="ministry-stat-value"><i class="fas fa-arrow-down"></i> 16</div>
+                                <div class="ministry-stat-label">Ministries below average</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-right">
+                        <div class="gauge-wrapper">
+                            <canvas id="gaugeChart" width="100" height="100"
+                                style="width:100px; height:100px;"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CARD 3: HIGH-VALUE PROJECTS -->
+            <div class="dashboard-card">
+                <div class="card-header">
+                    <span class="card-title"><i class="fas fa-gem"></i> HIGH-VALUE PROJECTS</span>
+                    <span class="trend-badge">> BDT 1,000 Cr</span>
+                </div>
+                <div class="card-with-right-chart">
+                    <div class="card-left">
+                        <div class="kpi-number">42</div>
+                        <div class="stat-item" style="margin-top:8px;"><span class="stat-label"><i
+                                    class="fas fa-coins"></i> Total allocation</span><span class="stat-value">1,28,500
+                                Cr</span></div>
+                        <div class="stat-item"><span class="stat-label"><i class="fas fa-percent"></i> Budget
+                                share</span><span class="stat-value">52.3% (Top 15%)</span></div>
+                    </div>
+                    <div class="card-right">
+                        <div class="donut-wrapper">
+                            <canvas id="sectorDonutChart" width="115" height="115"
+                                style="width:115px; height:115px;"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CARD 4: PROGRESS OVERVIEW (overrun items redesigned as two lines) -->
+            <div class="dashboard-card">
+                <div class="card-header">
+                    <span class="card-title"><i class="fas fa-chart-bar"></i> PROGRESS OVERVIEW</span>
+                    <span class="trend-badge">by completion %</span>
+                </div>
+                <div class="progress-chart">
+                    <div class="progress-stack" id="progressStack">
+                        <div class="progress-segment" data-range="0-30%"
+                            style="width: 18.5%; background-color: #ef4444;">250</div>
+                        <div class="progress-segment" data-range="30-60%"
+                            style="width: 29.6%; background-color: #f59e0b;">400</div>
+                        <div class="progress-segment" data-range="60-80%"
+                            style="width: 33.3%; background-color: #10b981;">450</div>
+                        <div class="progress-segment" data-range="80-100%"
+                            style="width: 18.5%; background-color: #3b82b6;">250</div>
+                    </div>
+                    <div class="progress-labels">
+                        <div class="progress-label-item" data-range="0-30%"><span class="progress-label-color"
+                                style="background:#ef4444;"></span> 0-30%</div>
+                        <div class="progress-label-item" data-range="30-60%"><span class="progress-label-color"
+                                style="background:#f59e0b;"></span> 30-60%</div>
+                        <div class="progress-label-item" data-range="60-80%"><span class="progress-label-color"
+                                style="background:#10b981;"></span> 60-80%</div>
+                        <div class="progress-label-item" data-range="80-100%"><span class="progress-label-color"
+                                style="background:#3b82b6;"></span> 80-100%</div>
+                    </div>
+                </div>
+                <div class="divider-dashed"></div>
+                <div class="overrun-stats">
+                    <div class="overrun-item" id="timeOverrun">
+                        <div class="overrun-main">
+                            <span class="overrun-number">87</span>
+                            <div class="overrun-compare"><i class="fas fa-arrow-up"></i> +5% vs target</div>
+                        </div>
+                        <span class="overrun-label"><i class="fas fa-clock"></i> Time Overrun</span>
+                    </div>
+                    <div class="overrun-item" id="costOverrun">
+                        <div class="overrun-main">
+                            <span class="overrun-number">112</span>
+                            <div class="overrun-compare"><i class="fas fa-arrow-up"></i> +8% vs plan</div>
+                        </div>
+                        <span class="overrun-label"><i class="fas fa-chart-line"></i> Cost Overrun</span>
                     </div>
                 </div>
             </div>
         </div>
+        <div id="adp-dashboard-container" style="margin-top: 30px;"></div>
+    </div>
 
-        <!-- CARD 3: HIGH-VALUE PROJECTS -->
-        <div class="dashboard-card">
-            <div class="card-header">
-                <span class="card-title"><i class="fas fa-gem"></i> HIGH-VALUE PROJECTS</span>
-                <span class="trend-badge">> BDT 1,000 Cr</span>
+    <!-- Modal -->
+    <div id="detailModal" class="modal-overlay">
+        <div class="modal-container">
+            <div class="modal-header">
+                <h3 id="modalTitle">Details</h3>
+                <button class="close-modal" id="closeModalBtn"><i class="fas fa-times"></i></button>
             </div>
-            <div class="card-with-right-chart">
-                <div class="card-left">
-                    <div class="kpi-number">42</div>
-                    <div class="stat-item" style="margin-top:8px;"><span class="stat-label"><i class="fas fa-coins"></i> Total allocation</span><span class="stat-value">1,28,500 Cr</span></div>
-                    <div class="stat-item"><span class="stat-label"><i class="fas fa-percent"></i> Budget share</span><span class="stat-value">52.3% (Top 15%)</span></div>
-                </div>
-                <div class="card-right">
-                    <div class="donut-wrapper">
-                        <canvas id="sectorDonutChart" width="115" height="115" style="width:115px; height:115px;"></canvas>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- CARD 4: PROGRESS OVERVIEW (overrun items redesigned as two lines) -->
-        <div class="dashboard-card">
-            <div class="card-header">
-                <span class="card-title"><i class="fas fa-chart-bar"></i> PROGRESS OVERVIEW</span>
-                <span class="trend-badge">by completion %</span>
-            </div>
-            <div class="progress-chart">
-                <div class="progress-stack" id="progressStack">
-                    <div class="progress-segment" data-range="0-30%" style="width: 18.5%; background-color: #ef4444;">250</div>
-                    <div class="progress-segment" data-range="30-60%" style="width: 29.6%; background-color: #f59e0b;">400</div>
-                    <div class="progress-segment" data-range="60-80%" style="width: 33.3%; background-color: #10b981;">450</div>
-                    <div class="progress-segment" data-range="80-100%" style="width: 18.5%; background-color: #3b82b6;">250</div>
-                </div>
-                <div class="progress-labels">
-                    <div class="progress-label-item" data-range="0-30%"><span class="progress-label-color" style="background:#ef4444;"></span> 0-30%</div>
-                    <div class="progress-label-item" data-range="30-60%"><span class="progress-label-color" style="background:#f59e0b;"></span> 30-60%</div>
-                    <div class="progress-label-item" data-range="60-80%"><span class="progress-label-color" style="background:#10b981;"></span> 60-80%</div>
-                    <div class="progress-label-item" data-range="80-100%"><span class="progress-label-color" style="background:#3b82b6;"></span> 80-100%</div>
-                </div>
-            </div>
-            <div class="divider-dashed"></div>
-            <div class="overrun-stats">
-                <div class="overrun-item" id="timeOverrun">
-                    <div class="overrun-main">
-                        <span class="overrun-number">87</span>
-                        <div class="overrun-compare"><i class="fas fa-arrow-up"></i> +5% vs target</div>
-                    </div>
-                    <span class="overrun-label"><i class="fas fa-clock"></i> Time Overrun</span>
-                </div>
-                <div class="overrun-item" id="costOverrun">
-                    <div class="overrun-main">
-                        <span class="overrun-number">112</span>
-                        <div class="overrun-compare"><i class="fas fa-arrow-up"></i> +8% vs plan</div>
-                    </div>
-                    <span class="overrun-label"><i class="fas fa-chart-line"></i> Cost Overrun</span>
-                </div>
+            <div class="modal-body" id="modalBody"></div>
+            <div class="redirect-actions">
+                <button class="btn-redirect btn-secondary" id="modalCloseSecondary">Close</button>
+                <button class="btn-redirect" id="modalRedirectBtn">View Full List →</button>
             </div>
         </div>
     </div>
-</div>
 
-<!-- Modal -->
-<div id="detailModal" class="modal-overlay">
-    <div class="modal-container">
-        <div class="modal-header">
-            <h3 id="modalTitle">Details</h3>
-            <button class="close-modal" id="closeModalBtn"><i class="fas fa-times"></i></button>
-        </div>
-        <div class="modal-body" id="modalBody"></div>
-        <div class="redirect-actions">
-            <button class="btn-redirect btn-secondary" id="modalCloseSecondary">Close</button>
-            <button class="btn-redirect" id="modalRedirectBtn">View Full List →</button>
-        </div>
-    </div>
-</div>
-
-<script>
-    // ========== DATA ==========
-    const projectTypeData = { DPP: 1141, TAPP: 121, Feasibility: 22, OwnFund: 66 };
     
-    const financialBreakdown = {
-        Expenditure: { metric: "Total Expenditure", amount: "1,70,000 Cr", percentage: "68.4%", details: "68.4% of total allocation utilized. Major spending in Infrastructure & Energy sectors.", topProjects: ["National Highway Expansion (24,000 Cr)", "Power Grid Modernization (18,500 Cr)", "Rural Electrification (12,200 Cr)"] },
-        Remaining: { metric: "Unutilized Allocation", amount: "78,500 Cr", percentage: "31.6%", details: "31.6% remaining – committed pipeline and under-execution.", topProjects: ["Pending Disbursements", "Contract Renegotiations", "Q4 Acceleration Plans"] }
-    };
+    <script>
+        fetch('other-cards.html') // Change this to match your presentation dashboard filename
+            .then(response => {
+                if (!response.ok) throw new Error('Network response was not ok');
+                return response.text();
+            })
+            .then(htmlContent => {
+                const container = document.getElementById('adp-dashboard-container');
 
-    const sectorDetails = {
-        Infra: { name: "Infrastructure", projects: ["Padma Bridge Phase 2", "National Road Corridor", "Urban Flyover", "Smart City Pilot", "Seaport Modernization", "Railway Electrification", "Airport Expansion"], allocation: "52,000 Cr", totalCount: 14 },
-        Energy: { name: "Energy", projects: ["Solar Power Park", "Wind Energy Project", "LNG Terminal", "Grid Modernization", "Nuclear Power Support", "Coal Plant Upgrade"], allocation: "41,200 Cr", totalCount: 12 },
-        Transport: { name: "Transport", projects: ["Metro Line 5", "BRT Line 3", "Cargo Rail Corridor", "Inland Waterway", "Bus Rapid Transit", "Ring Road"], allocation: "23,500 Cr", totalCount: 9 },
-        Health: { name: "Health", projects: ["National Hospital Upgrade", "Primary Healthcare Digital", "Medical Equipment", "Pandemic Response"], allocation: "6,800 Cr", totalCount: 4 },
-        Education: { name: "Education", projects: ["Digital Classroom", "University Research Hub", "Scholarship Program"], allocation: "3,000 Cr", totalCount: 3 }
-    };
+                // 1. Inject the HTML string markup directly
+                container.innerHTML = htmlContent;
 
-    const progressData = {
-        "0-30%": { range: "0-30% Completion", description: "Early stage - Planning & initial implementation", projects: ["Smart City Master Plan", "Coastal Protection Study", "Digital Infrastructure Blueprint", "Railway Feasibility", "Urban Development Framework", "Water Treatment Design"], totalCount: 250 },
-        "30-60%": { range: "30-60% Completion", description: "Mid stage - Active implementation", projects: ["Highway Expansion Phase 2", "Rural Electrification", "School Digitalization", "Healthcare Equipment Rollout", "Bridge Construction Mid-phase", "Irrigation Canal Development"], totalCount: 400 },
-        "60-80%": { range: "60-80% Completion", description: "Advanced stage - Nearing completion", projects: ["Power Grid Modernization", "Metro Rail Phase 1", "Port Expansion Project", "Hospital Infrastructure Upgrade", "University Campus Development", "Telecom Network Enhancement"], totalCount: 450 },
-        "80-100%": { range: "80-100% Completion", description: "Final stage - Handover & closure", projects: ["Water Supply Scheme", "Road Rehabilitation Project", "Community Health Center Network", "Vocational Training Completion", "Rural Bridge Program Final Phase"], totalCount: 250 }
-    };
+                // 2. Extract and manually execute script blocks so Chart.js runs perfectly
+                const scripts = container.querySelectorAll('script');
+                scripts.forEach(oldScript => {
+                    const newScript = document.createElement('script');
+                    if (oldScript.src) {
+                        newScript.src = oldScript.src;
+                    } else {
+                        newScript.textContent = oldScript.textContent;
+                    }
+                    document.body.appendChild(newScript);
+                    oldScript.remove(); // Clean up original reference inside container
+                });
+            })
+            .catch(error => {
+                console.error('Error fetching the dashboard component:', error);
+                document.getElementById('adp-dashboard-container').innerHTML = `
+                    <div class="p-4 text-rose-700 bg-rose-50 rounded-lg max-w-7xl mx-auto border border-rose-200">
+                        Failed to seamlessly load ADP Performance Dashboard component.
+                    </div>`;
+            });
+    </script>
 
-    // Mock ministries data
-    const ministriesAbove = ["Ministry of Finance", "Ministry of Power & Energy", "Ministry of Road Transport", "Ministry of Health", "Ministry of Education", "Ministry of Agriculture", "Ministry of Water Resources", "Ministry of Housing", "Ministry of Local Govt", "Ministry of Science & Tech", "Ministry of Defence", "Ministry of Commerce", "Ministry of Textiles", "Ministry of Shipping", "Ministry of Civil Aviation", "Ministry of Railways", "Ministry of Petroleum", "Ministry of Steel", "Ministry of Chemicals", "Ministry of Electronics", "Ministry of New & Renewable Energy", "Ministry of Corporate Affairs", "Ministry of Statistics", "Ministry of Planning"];
-    const ministriesBelow = ["Ministry of Culture", "Ministry of Tourism", "Ministry of Youth Affairs", "Ministry of Social Justice", "Ministry of Tribal Affairs", "Ministry of Minority Affairs", "Ministry of Food Processing", "Ministry of Consumer Affairs", "Ministry of Environment", "Ministry of Forest", "Ministry of Earth Sciences", "Ministry of Fisheries", "Ministry of Animal Husbandry", "Ministry of Cooperation", "Ministry of Parliamentary Affairs", "Ministry of Law", "Ministry of Personnel", "Ministry of Communications"];
+    <script>
+        // ========== DATA ==========
+        const projectTypeData = { DPP: 1141, TAPP: 121, Feasibility: 22, OwnFund: 66 };
 
-    // Modal functions
-    function openModal(title, contentHtml, redirectCallback = null) {
-        const modal = document.getElementById('detailModal');
-        document.getElementById('modalTitle').innerText = title;
-        document.getElementById('modalBody').innerHTML = contentHtml;
-        modal.classList.add('active');
-        const redirectBtn = document.getElementById('modalRedirectBtn');
-        const newBtn = redirectBtn.cloneNode(true);
-        redirectBtn.parentNode.replaceChild(newBtn, redirectBtn);
-        newBtn.addEventListener('click', () => {
-            if (redirectCallback) redirectCallback();
-            else alert("📋 Full list would open here.");
-        });
+        const financialBreakdown = {
+            Expenditure: { metric: "Total Expenditure", amount: "1,70,000 Cr", percentage: "68.4%", details: "68.4% of total allocation utilized. Major spending in Infrastructure & Energy sectors.", topProjects: ["National Highway Expansion (24,000 Cr)", "Power Grid Modernization (18,500 Cr)", "Rural Electrification (12,200 Cr)"] },
+            Remaining: { metric: "Unutilized Allocation", amount: "78,500 Cr", percentage: "31.6%", details: "31.6% remaining – committed pipeline and under-execution.", topProjects: ["Pending Disbursements", "Contract Renegotiations", "Q4 Acceleration Plans"] }
+        };
+
+        const sectorDetails = {
+            Infra: { name: "Infrastructure", projects: ["Padma Bridge Phase 2", "National Road Corridor", "Urban Flyover", "Smart City Pilot", "Seaport Modernization", "Railway Electrification", "Airport Expansion"], allocation: "52,000 Cr", totalCount: 14 },
+            Energy: { name: "Energy", projects: ["Solar Power Park", "Wind Energy Project", "LNG Terminal", "Grid Modernization", "Nuclear Power Support", "Coal Plant Upgrade"], allocation: "41,200 Cr", totalCount: 12 },
+            Transport: { name: "Transport", projects: ["Metro Line 5", "BRT Line 3", "Cargo Rail Corridor", "Inland Waterway", "Bus Rapid Transit", "Ring Road"], allocation: "23,500 Cr", totalCount: 9 },
+            Health: { name: "Health", projects: ["National Hospital Upgrade", "Primary Healthcare Digital", "Medical Equipment", "Pandemic Response"], allocation: "6,800 Cr", totalCount: 4 },
+            Education: { name: "Education", projects: ["Digital Classroom", "University Research Hub", "Scholarship Program"], allocation: "3,000 Cr", totalCount: 3 }
+        };
+
+        const progressData = {
+            "0-30%": { range: "0-30% Completion", description: "Early stage - Planning & initial implementation", projects: ["Smart City Master Plan", "Coastal Protection Study", "Digital Infrastructure Blueprint", "Railway Feasibility", "Urban Development Framework", "Water Treatment Design"], totalCount: 250 },
+            "30-60%": { range: "30-60% Completion", description: "Mid stage - Active implementation", projects: ["Highway Expansion Phase 2", "Rural Electrification", "School Digitalization", "Healthcare Equipment Rollout", "Bridge Construction Mid-phase", "Irrigation Canal Development"], totalCount: 400 },
+            "60-80%": { range: "60-80% Completion", description: "Advanced stage - Nearing completion", projects: ["Power Grid Modernization", "Metro Rail Phase 1", "Port Expansion Project", "Hospital Infrastructure Upgrade", "University Campus Development", "Telecom Network Enhancement"], totalCount: 450 },
+            "80-100%": { range: "80-100% Completion", description: "Final stage - Handover & closure", projects: ["Water Supply Scheme", "Road Rehabilitation Project", "Community Health Center Network", "Vocational Training Completion", "Rural Bridge Program Final Phase"], totalCount: 250 }
+        };
+
+        // Mock ministries data
+        const ministriesAbove = ["Ministry of Finance", "Ministry of Power & Energy", "Ministry of Road Transport", "Ministry of Health", "Ministry of Education", "Ministry of Agriculture", "Ministry of Water Resources", "Ministry of Housing", "Ministry of Local Govt", "Ministry of Science & Tech", "Ministry of Defence", "Ministry of Commerce", "Ministry of Textiles", "Ministry of Shipping", "Ministry of Civil Aviation", "Ministry of Railways", "Ministry of Petroleum", "Ministry of Steel", "Ministry of Chemicals", "Ministry of Electronics", "Ministry of New & Renewable Energy", "Ministry of Corporate Affairs", "Ministry of Statistics", "Ministry of Planning"];
+        const ministriesBelow = ["Ministry of Culture", "Ministry of Tourism", "Ministry of Youth Affairs", "Ministry of Social Justice", "Ministry of Tribal Affairs", "Ministry of Minority Affairs", "Ministry of Food Processing", "Ministry of Consumer Affairs", "Ministry of Environment", "Ministry of Forest", "Ministry of Earth Sciences", "Ministry of Fisheries", "Ministry of Animal Husbandry", "Ministry of Cooperation", "Ministry of Parliamentary Affairs", "Ministry of Law", "Ministry of Personnel", "Ministry of Communications"];
+
+        // Modal functions
+        function openModal(title, contentHtml, redirectCallback = null) {
+            const modal = document.getElementById('detailModal');
+            document.getElementById('modalTitle').innerText = title;
+            document.getElementById('modalBody').innerHTML = contentHtml;
+            modal.classList.add('active');
+            const redirectBtn = document.getElementById('modalRedirectBtn');
+            const newBtn = redirectBtn.cloneNode(true);
+            redirectBtn.parentNode.replaceChild(newBtn, redirectBtn);
+            newBtn.addEventListener('click', () => {
+                if (redirectCallback) redirectCallback();
+                else alert("📋 Full list would open here.");
+            });
+            document.getElementById('modalCloseSecondary').onclick = closeModal;
+        }
+        function closeModal() {
+            document.getElementById('detailModal').classList.remove('active');
+        }
+        document.getElementById('closeModalBtn').onclick = closeModal;
         document.getElementById('modalCloseSecondary').onclick = closeModal;
-    }
-    function closeModal() {
-        document.getElementById('detailModal').classList.remove('active');
-    }
-    document.getElementById('closeModalBtn').onclick = closeModal;
-    document.getElementById('modalCloseSecondary').onclick = closeModal;
-    window.onclick = function(e) { if (e.target === document.getElementById('detailModal')) closeModal(); };
+        window.onclick = function (e) { if (e.target === document.getElementById('detailModal')) closeModal(); };
 
-    // CHART 1: Horizontal bar chart (full size, no legend)
-    const barCtx = document.getElementById('categoryBarChart').getContext('2d');
-    new Chart(barCtx, {
-        type: 'bar',
-        data: {
-            labels: ['DPP', 'TAPP', 'Feasibility', 'Own Fund'],
-            datasets: [{
-                label: 'Projects',
-                data: [1141, 121, 22, 66],
-                backgroundColor: ['#2c6e9e', '#48a0c0', '#f4a261', '#2a9d8f'],
-                borderRadius: 4,
-                barPercentage: 0.7,
-                categoryPercentage: 0.8
-            }]
-        },
-        options: {
-            indexAxis: 'y',
-            responsive: true,
-            maintainAspectRatio: true,
-            plugins: {
-                legend: { display: false },
-                tooltip: { callbacks: { label: (ctx) => `${ctx.raw} projects` } }
+        // CHART 1: Horizontal bar chart (full size, no legend)
+        const barCtx = document.getElementById('categoryBarChart').getContext('2d');
+        new Chart(barCtx, {
+            type: 'bar',
+            data: {
+                labels: ['DPP', 'TAPP', 'Feasibility', 'Own Fund'],
+                datasets: [{
+                    label: 'Projects',
+                    data: [1141, 121, 22, 66],
+                    backgroundColor: ['#2c6e9e', '#48a0c0', '#f4a261', '#2a9d8f'],
+                    borderRadius: 4,
+                    barPercentage: 0.7,
+                    categoryPercentage: 0.8
+                }]
             },
-            scales: {
-                x: { ticks: { font: { size: 9 } }, grid: { color: '#eef2f8' }, title: { display: true, text: 'Project Categories', font: { size: 9 } } },
-                y: { ticks: { font: { size: 9 } }, grid: { display: false } }
-            },
-            onClick: (event, activeElements) => {
-                if (activeElements.length) {
-                    const index = activeElements[0].index;
-                    const labels = ['DPP', 'TAPP', 'Feasibility', 'Own Fund'];
-                    const category = labels[index];
-                    const count = [1141, 121, 22, 66][index];
-                    openModal(`${category} Projects`, `<div><strong>${category}</strong><br>Total projects: ${count}<br>Click redirect for full list.</div>`, () => alert(`🔁 Redirect to ${category} project list`));
+            options: {
+                indexAxis: 'y',
+                responsive: true,
+                maintainAspectRatio: true,
+                plugins: {
+                    legend: { display: false },
+                    tooltip: { callbacks: { label: (ctx) => `${ctx.raw} projects` } }
+                },
+                scales: {
+                    x: { ticks: { font: { size: 9 } }, grid: { color: '#eef2f8' }, title: { display: true, text: 'Project Categories', font: { size: 9 } } },
+                    y: { ticks: { font: { size: 9 } }, grid: { display: false } }
+                },
+                onClick: (event, activeElements) => {
+                    if (activeElements.length) {
+                        const index = activeElements[0].index;
+                        const labels = ['DPP', 'TAPP', 'Feasibility', 'Own Fund'];
+                        const category = labels[index];
+                        const count = [1141, 121, 22, 66][index];
+                        openModal(`${category} Projects`, `<div><strong>${category}</strong><br>Total projects: ${count}<br>Click redirect for full list.</div>`, () => alert(`🔁 Redirect to ${category} project list`));
+                    }
                 }
-            }
-        }
-    });
-
-    // CHART 2: Gauge
-    const gaugeCtx = document.getElementById('gaugeChart').getContext('2d');
-    new Chart(gaugeCtx, {
-        type: 'doughnut',
-        data: { datasets: [{ data: [68.4, 31.6], backgroundColor: ['#2c7da0', '#e9ecef'], borderWidth: 0, cutout: '70%', rotation: -90 }] },
-        options: {
-            responsive: true, maintainAspectRatio: true,
-            plugins: { tooltip: { callbacks: { label: (ctx) => `${ctx.raw}%` } }, legend: { display: false } },
-            onClick: (event, activeElements) => {
-                if (activeElements.length) {
-                    const data = activeElements[0].index === 0 ? financialBreakdown.Expenditure : financialBreakdown.Remaining;
-                    const projHtml = `<ul class="detail-list">${data.topProjects.map(p => `<li><span class="detail-label">💰 ${p}</span></li>`).join('')}</ul>`;
-                    const content = `<div style="background:#f0f6fe; padding:10px; border-radius:14px;"><strong>${data.metric}</strong>: ${data.amount} (${data.percentage})</div><div>${data.details}</div>${projHtml}`;
-                    openModal(`${data.metric} (${data.percentage})`, content, () => alert(`📊 Navigate to ${data.metric.toLowerCase()} report`));
-                }
-            }
-        }
-    });
-    const gaugeParent = document.querySelector('.gauge-wrapper');
-    if (gaugeParent && !gaugeParent.querySelector('.gauge-center-text')) {
-        const span = document.createElement('div');
-        span.className = 'gauge-center-text';
-        span.style.cssText = 'position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); text-align:center; font-weight:800; font-size:0.8rem; color:#0b3b4e; pointer-events:none;';
-        span.innerHTML = `68%`;
-        gaugeParent.style.position = 'relative';
-        gaugeParent.appendChild(span);
-    }
-
-    // CHART 3: Donut
-    const sectorCtx = document.getElementById('sectorDonutChart').getContext('2d');
-    const donutChart = new Chart(sectorCtx, {
-        type: 'doughnut',
-        data: { labels: ['Infra', 'Energy', 'Transport', 'Health', 'Education'], datasets: [{ data: [14, 12, 9, 4, 3], backgroundColor: ['#3b82b6', '#f59e0b', '#10b981', '#ef4444', '#8b5cf6'], borderWidth: 0, cutout: '60%' }] },
-        options: {
-            responsive: true, maintainAspectRatio: true,
-            plugins: { legend: { display: false }, tooltip: { callbacks: { label: (ctx) => `${ctx.label}: ${ctx.raw} projects` } } },
-            onClick: (event, activeElements) => {
-                if (activeElements.length) {
-                    const label = donutChart.data.labels[activeElements[0].index];
-                    const key = { Infra:'Infra', Energy:'Energy', Transport:'Transport', Health:'Health', Education:'Education' }[label];
-                    const data = sectorDetails[key];
-                    const projList = data.projects.map(p => `<li><span class="detail-label">🏗️ ${p}</span></li>`).join('');
-                    const content = `<div style="background:#f0f6fe; padding:10px; border-radius:14px;"><strong>${data.name}</strong><br>📊 ${data.totalCount} projects · ${data.allocation}</div><ul class="detail-list">${projList}</ul>`;
-                    openModal(`${data.name} (${data.totalCount} projects)`, content, () => alert(`🔁 Redirect to ${data.name} dashboard`));
-                }
-            }
-        }
-    });
-    const donutWrapper = document.querySelector('.donut-wrapper');
-    if (donutWrapper && !donutWrapper.querySelector('.donut-inner-text')) {
-        const inner = document.createElement('div');
-        inner.className = 'donut-inner-text';
-        inner.style.cssText = 'position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); text-align:center; font-weight:800; font-size:0.7rem; color:#0d445b; pointer-events:none;';
-        inner.innerHTML = `42`;
-        donutWrapper.style.position = 'relative';
-        donutWrapper.appendChild(inner);
-    }
-
-    // Card 4: Progress click handlers
-    document.querySelectorAll('.progress-segment, .progress-label-item').forEach(el => {
-        el.addEventListener('click', () => {
-            const range = el.getAttribute('data-range');
-            if (range && progressData[range]) {
-                const d = progressData[range];
-                const projList = d.projects.map(p => `<li><span class="detail-label">📊 ${p}</span></li>`).join('');
-                const content = `<div style="background:#f0f6fe; padding:10px; border-radius:14px;"><strong>${d.range}</strong><br>📋 ${d.totalCount} projects · ${d.description}</div><ul class="detail-list">${projList}</ul>`;
-                openModal(`${d.range} (${d.totalCount} projects)`, content, () => alert(`🔁 Redirect to ${d.range} project list`));
             }
         });
-    });
 
-    // Overrun items click handlers
-    document.getElementById('timeOverrun').addEventListener('click', () => {
-        openModal("Time Overrun Projects", "<div><strong>87 projects</strong> with time overrun</div><div>Average delay: 14 months</div><div>Top affected sectors: Infrastructure, Transport</div>", () => alert("🔁 Redirect to time overrun analysis"));
-    });
-    document.getElementById('costOverrun').addEventListener('click', () => {
-        openModal("Cost Overrun Projects", "<div><strong>112 projects</strong> with cost overrun</div><div>Average cost escalation: 18%</div><div>Top affected sectors: Energy, Health</div>", () => alert("🔁 Redirect to cost overrun analysis"));
-    });
+        // CHART 2: Gauge
+        const gaugeCtx = document.getElementById('gaugeChart').getContext('2d');
+        new Chart(gaugeCtx, {
+            type: 'doughnut',
+            data: { datasets: [{ data: [68.4, 31.6], backgroundColor: ['#2c7da0', '#e9ecef'], borderWidth: 0, cutout: '70%', rotation: -90 }] },
+            options: {
+                responsive: true, maintainAspectRatio: true,
+                plugins: { tooltip: { callbacks: { label: (ctx) => `${ctx.raw}%` } }, legend: { display: false } },
+                onClick: (event, activeElements) => {
+                    if (activeElements.length) {
+                        const data = activeElements[0].index === 0 ? financialBreakdown.Expenditure : financialBreakdown.Remaining;
+                        const projHtml = `<ul class="detail-list">${data.topProjects.map(p => `<li><span class="detail-label">💰 ${p}</span></li>`).join('')}</ul>`;
+                        const content = `<div style="background:#f0f6fe; padding:10px; border-radius:14px;"><strong>${data.metric}</strong>: ${data.amount} (${data.percentage})</div><div>${data.details}</div>${projHtml}`;
+                        openModal(`${data.metric} (${data.percentage})`, content, () => alert(`📊 Navigate to ${data.metric.toLowerCase()} report`));
+                    }
+                }
+            }
+        });
+        const gaugeParent = document.querySelector('.gauge-wrapper');
+        if (gaugeParent && !gaugeParent.querySelector('.gauge-center-text')) {
+            const span = document.createElement('div');
+            span.className = 'gauge-center-text';
+            span.style.cssText = 'position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); text-align:center; font-weight:800; font-size:0.8rem; color:#0b3b4e; pointer-events:none;';
+            span.innerHTML = `68%`;
+            gaugeParent.style.position = 'relative';
+            gaugeParent.appendChild(span);
+        }
 
-    // Ministry stats click handlers
-    document.getElementById('ministryAbove').addEventListener('click', () => {
-        window.location.href = 'ministry-performance-high.html';
-        // const listHtml = ministriesAbove.map(m => `<li><span class="detail-label">🏛️ ${m}</span></li>`).join('');
-        // const content = `<div style="background:#e8f5e9; padding:10px; border-radius:14px; margin-bottom:10px;"><strong>Ministries Above National Average (68.4%)</strong><br>${ministriesAbove.length} ministries with higher execution rate</div><ul class="detail-list">${listHtml}</ul>`;
-        // openModal(`Ministries Above Average (${ministriesAbove.length})`, content, () => alert("🔁 Redirect to detailed ministry performance report"));
-    });
-    document.getElementById('ministryBelow').addEventListener('click', () => {
-        window.location.href = 'ministry-performance-low.html';
-        // const listHtml = ministriesBelow.map(m => `<li><span class="detail-label">🏛️ ${m}</span></li>`).join('');
-        // const content = `<div style="background:#ffebee; padding:10px; border-radius:14px; margin-bottom:10px;"><strong>Ministries Below National Average (68.4%)</strong><br>${ministriesBelow.length} ministries with lower execution rate</div><ul class="detail-list">${listHtml}</ul>`;
-        // openModal(`Ministries Below Average (${ministriesBelow.length})`, content, () => alert("🔁 Redirect to detailed ministry performance report"));
-    });
-</script>
+        // CHART 3: Donut
+        const sectorCtx = document.getElementById('sectorDonutChart').getContext('2d');
+        const donutChart = new Chart(sectorCtx, {
+            type: 'doughnut',
+            data: { labels: ['Infra', 'Energy', 'Transport', 'Health', 'Education'], datasets: [{ data: [14, 12, 9, 4, 3], backgroundColor: ['#3b82b6', '#f59e0b', '#10b981', '#ef4444', '#8b5cf6'], borderWidth: 0, cutout: '60%' }] },
+            options: {
+                responsive: true, maintainAspectRatio: true,
+                plugins: { legend: { display: false }, tooltip: { callbacks: { label: (ctx) => `${ctx.label}: ${ctx.raw} projects` } } },
+                onClick: (event, activeElements) => {
+                    if (activeElements.length) {
+                        const label = donutChart.data.labels[activeElements[0].index];
+                        const key = { Infra: 'Infra', Energy: 'Energy', Transport: 'Transport', Health: 'Health', Education: 'Education' }[label];
+                        const data = sectorDetails[key];
+                        const projList = data.projects.map(p => `<li><span class="detail-label">🏗️ ${p}</span></li>`).join('');
+                        const content = `<div style="background:#f0f6fe; padding:10px; border-radius:14px;"><strong>${data.name}</strong><br>📊 ${data.totalCount} projects · ${data.allocation}</div><ul class="detail-list">${projList}</ul>`;
+                        openModal(`${data.name} (${data.totalCount} projects)`, content, () => alert(`🔁 Redirect to ${data.name} dashboard`));
+                    }
+                }
+            }
+        });
+        const donutWrapper = document.querySelector('.donut-wrapper');
+        if (donutWrapper && !donutWrapper.querySelector('.donut-inner-text')) {
+            const inner = document.createElement('div');
+            inner.className = 'donut-inner-text';
+            inner.style.cssText = 'position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); text-align:center; font-weight:800; font-size:0.7rem; color:#0d445b; pointer-events:none;';
+            inner.innerHTML = `42`;
+            donutWrapper.style.position = 'relative';
+            donutWrapper.appendChild(inner);
+        }
+
+        // Card 4: Progress click handlers
+        document.querySelectorAll('.progress-segment, .progress-label-item').forEach(el => {
+            el.addEventListener('click', () => {
+                const range = el.getAttribute('data-range');
+                if (range && progressData[range]) {
+                    const d = progressData[range];
+                    const projList = d.projects.map(p => `<li><span class="detail-label">📊 ${p}</span></li>`).join('');
+                    const content = `<div style="background:#f0f6fe; padding:10px; border-radius:14px;"><strong>${d.range}</strong><br>📋 ${d.totalCount} projects · ${d.description}</div><ul class="detail-list">${projList}</ul>`;
+                    openModal(`${d.range} (${d.totalCount} projects)`, content, () => alert(`🔁 Redirect to ${d.range} project list`));
+                }
+            });
+        });
+
+        // Overrun items click handlers
+        document.getElementById('timeOverrun').addEventListener('click', () => {
+            openModal("Time Overrun Projects", "<div><strong>87 projects</strong> with time overrun</div><div>Average delay: 14 months</div><div>Top affected sectors: Infrastructure, Transport</div>", () => alert("🔁 Redirect to time overrun analysis"));
+        });
+        document.getElementById('costOverrun').addEventListener('click', () => {
+            openModal("Cost Overrun Projects", "<div><strong>112 projects</strong> with cost overrun</div><div>Average cost escalation: 18%</div><div>Top affected sectors: Energy, Health</div>", () => alert("🔁 Redirect to cost overrun analysis"));
+        });
+
+        // Ministry stats click handlers
+        document.getElementById('ministryAbove').addEventListener('click', () => {
+            window.location.href = 'ministry-performance-high.html';
+            // const listHtml = ministriesAbove.map(m => `<li><span class="detail-label">🏛️ ${m}</span></li>`).join('');
+            // const content = `<div style="background:#e8f5e9; padding:10px; border-radius:14px; margin-bottom:10px;"><strong>Ministries Above National Average (68.4%)</strong><br>${ministriesAbove.length} ministries with higher execution rate</div><ul class="detail-list">${listHtml}</ul>`;
+            // openModal(`Ministries Above Average (${ministriesAbove.length})`, content, () => alert("🔁 Redirect to detailed ministry performance report"));
+        });
+        document.getElementById('ministryBelow').addEventListener('click', () => {
+            window.location.href = 'ministry-performance-low.html';
+            // const listHtml = ministriesBelow.map(m => `<li><span class="detail-label">🏛️ ${m}</span></li>`).join('');
+            // const content = `<div style="background:#ffebee; padding:10px; border-radius:14px; margin-bottom:10px;"><strong>Ministries Below National Average (68.4%)</strong><br>${ministriesBelow.length} ministries with lower execution rate</div><ul class="detail-list">${listHtml}</ul>`;
+            // openModal(`Ministries Below Average (${ministriesBelow.length})`, content, () => alert("🔁 Redirect to detailed ministry performance report"));
+        });
+    </script>
 </body>
+
 </html>
