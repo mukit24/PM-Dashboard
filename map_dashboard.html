@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bangladesh Project Mapping System</title>
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <style>
+        #map-container {
+            height: 600px;
+            width: 100%;
+        }
+
+        .leaflet-tooltip {
+            background-color: #1e293b !important;
+            color: #ffffff !important;
+            border: none !important;
+            border-radius: 0.375rem !important;
+            padding: 8px 12px !important;
+            font-size: 11px !important;
+            font-weight: 600;
+        }
+
+        .project-map-bubble {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #ffffff !important;
+            font-family: sans-serif;
+            font-size: 11px !important;
+            font-weight: 700 !important;
+            border: 2px solid #ffffff;
+            border-radius: 50%;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.25);
+            text-align: center;
+            white-space: nowrap;
+            z-index: 1000 !important;
+            /* Forces data bubbles to float securely on top of map fills */
+        }
+
+        .custom-legend-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            column-gap: 24px;
+            row-gap: 8px;
+            margin-top: 16px;
+            padding-top: 12px;
+            border-top: 1px solid #f1f5f9;
+            width: 100%;
+            font-size: 12px;
+            font-weight: 500;
+            color: #475569;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .color-box {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+
+        .bg-high {
+            background-color: #e11d48;
+        }
+
+        .bg-medium {
+            background-color: #f59e0b;
+        }
+
+        .bg-low {
+            background-color: #10b981;
+        }
+
+        .bg-zero {
+            background-color: #cbd5e1;
+        }
+    </style>
+</head>
+
+<body class="bg-slate-50 font-sans antialiased p-4 md:p-8">
+
+    <div class="max-w-6xl mx-auto bg-white rounded-xl border border-slate-200 shadow-md overflow-hidden">
+
+        <header
+            class="bg-slate-900 px-6 py-4 text-white flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+            <div>
+                <h1 class="text-lg font-bold tracking-tight">Geographic Project Monitoring Ledger</h1>
+                <p class="text-xs text-slate-400 mt-0.5">Interactive Spatial Drill-down Dashboard</p>
+            </div>
+            <div class="flex items-center gap-1.5 text-xs bg-slate-800 px-3 py-1.5 rounded-lg border border-slate-700">
+                <button onclick="loadDivisionLevel()"
+                    class="text-sky-400 hover:underline font-semibold">Bangladesh</button>
+                <span id="breadcrumb-div-wrapper" class="hidden text-slate-500">&gt;
+                    <button id="breadcrumb-div" class="text-sky-400 hover:underline font-semibold"></button>
+                </span>
+                <span id="breadcrumb-dist-wrapper" class="hidden text-slate-500">&gt;
+                    <span id="breadcrumb-dist" class="text-slate-300 font-semibold"></span>
+                </span>
+            </div>
+        </header>
+
+        <div class="grid grid-cols-1 lg:grid-cols-4">
+
+            <main class="lg:col-span-12 relative min-h-[500px] p-2 bg-slate-100 flex flex-col">
+                <div id="map-container" class="rounded-lg shadow-sm"></div>
+
+                <div class="custom-legend-container">
+                    <div class="legend-item"><span class="color-box bg-high"></span> High Density (150+)</div>
+                    <div class="legend-item"><span class="color-box bg-medium"></span> Moderate (50 - 149)</div>
+                    <div class="legend-item"><span class="color-box bg-low"></span> Baseline (1 - 49)</div>
+                    <div class="legend-item"><span class="color-box bg-zero"></span> No Project Tracking / Zero</div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+        integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+
+    <script>
+        // Core Metric Mock Database Engine
+        const mockProjectDatabase = {
+            divisions: { "Barishal": 180, "Chattogram": 480, "Dhaka": 1785, "Khulna": 310, "Rajshahi": 290, "Rangpur": 195, "Sylhet": 210, "Mymensingh": 157 },
+            districts: {
+                "Dhaka": 520, "Faridpur": 85, "Gazipur": 240, "Gopalganj": 70,
+                "Kishoreganj": 115, "Madaripur": 65, "Manikganj": 55, "Munshiganj": 90,
+                "Narayanganj": 185, "Narsingdi": 130, "Rajbari": 45, "Shariatpur": 50, "Tangail": 135
+            },
+            // Sub-district (Upazila) level tracking parameters for Dhaka district only
+            upazilas: {
+                "Dhamrai": 85,
+                "Dohar": 45,
+                "Keraniganj": 140,
+                "Nawabganj": 60,
+                "Savar": 190,
+                "Dhaka North City Corporation": 155,
+                "Dhaka South City Corporation": 55,
+            }
+        };
+
+        // Static balanced Division Palette
+        const divisionColorPalette = {
+            "Dhaka": "#1e3a8a",       // Deep Navy Blue
+            "Chattogram": "#16a34a",  // Vibrant Green
+            "Sylhet": "#a855f7",      // Bright Purple
+            "Khulna": "#0284c7",      // Sky Blue
+            "Barishal": "#e11d48",    // Crimson Red
+            "Rajshahi": "#ea580c",    // Dark Orange
+            "Rangpur": "#eab308",     // Bright Yellow
+            "Mymensingh": "#475569"   // Slate Gray
+        };
+
+        // Complete 10-Color Palette to distribute across sub-regions
+        const dynamicDistrictColors = [
+            "#2563eb", // Blue
+            "#db2777", // Pink/Magenta
+            "#059669", // Emerald Green
+            "#d97706", // Amber/Gold
+            "#7c3aed", // Violet/Purple
+            "#0891b2", // Cyan/Teal
+            "#ea580c", // Dark Orange
+            "#4f46e5", // Indigo
+            "#b45309", // Brownish Amber
+            "#be185d"  // Deep Rose
+        ];
+
+        let map, markerLayerGroup, geoJsonLayerGroup;
+
+        function initMap() {
+            const baseMapGrid = L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+                attribution: '&copy; OpenStreetMap contributors'
+            });
+
+            map = L.map('map-container', {
+                center: [23.6850, 90.3563],
+                zoom: 7,
+                minZoom: 6,
+                maxZoom: 14,
+                layers: [baseMapGrid]
+            });
+
+            geoJsonLayerGroup = L.layerGroup().addTo(map);
+            markerLayerGroup = L.layerGroup().addTo(map);
+            loadDivisionLevel();
+        }
+
+        // Extracts all structural coordinate points from polygons/multipolygons cleanly
+        function getGeometryCoordinates(geometry) {
+            let points = [];
+            if (geometry.type === "Polygon") {
+                points = geometry.coordinates[0];
+            } else if (geometry.type === "MultiPolygon") {
+                geometry.coordinates.forEach(poly => {
+                    points = coords = points.concat(poly[0]);
+                });
+            }
+            return points;
+        }
+
+        // UPGRADED ADVANCED TOPO ADJACENCY ENGINE: Looks for overlapping coordinates with a micro-tolerance margin 
+        function computeAdjacencyMap(features, nameProperty) {
+            const adjacencyMap = {};
+
+            features.forEach(f => {
+                adjacencyMap[f.properties[nameProperty]] = new Set();
+            });
+
+            // Parse coordinate tracks down to string mappings
+            const featureCoordinatesMap = features.map(f => {
+                const points = getGeometryCoordinates(f.geometry);
+                // Reduce coordinate precision slightly to catch touching boundaries flawlessly
+                const coordStrings = points.map(p => `${p[0].toFixed(3)},${p[1].toFixed(3)}`);
+                return {
+                    name: f.properties[nameProperty],
+                    coordSet: new Set(coordStrings)
+                };
+            });
+
+            // Compare maps to see which polygons share edge segments
+            for (let i = 0; i < featureCoordinatesMap.length; i++) {
+                const itemA = featureCoordinatesMap[i];
+
+                for (let j = i + 1; j < featureCoordinatesMap.length; j++) {
+                    const itemB = featureCoordinatesMap[j];
+                    let sharedNodes = 0;
+
+                    for (let node of itemB.coordSet) {
+                        if (itemA.coordSet.has(node)) {
+                            sharedNodes++;
+                            if (sharedNodes > 1) { // Found shared border line segment
+                                adjacencyMap[itemA.name].add(itemB.name);
+                                adjacencyMap[itemB.name].add(itemA.name);
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+            return adjacencyMap;
+        }
+
+        // Strict Greedy Graph Coloring Calculation Block
+        function assignGraphColors(features, adjacencyMap, nameProperty) {
+            const assignedColorsMap = {};
+
+            features.forEach(f => {
+                const currentFeatureName = f.properties[nameProperty];
+                const blockedColorIndexes = new Set();
+
+                adjacencyMap[currentFeatureName].forEach(neighbor => {
+                    if (assignedColorsMap[neighbor] !== undefined) {
+                        blockedColorIndexes.add(assignedColorsMap[neighbor]);
+                    }
+                });
+
+                let safeColorIndex = 0;
+                while (blockedColorIndexes.has(safeColorIndex)) {
+                    safeColorIndex++;
+                }
+                assignedColorsMap[currentFeatureName] = safeColorIndex;
+            });
+            return assignedColorsMap;
+        }
+
+        // --- LEVEL 1: RENDER NATIONAL DIVISION VIEW ---
+        function loadDivisionLevel() {
+            markerLayerGroup.clearLayers();
+            geoJsonLayerGroup.clearLayers();
+            map.setView([23.6850, 90.3563], 7);
+
+            document.getElementById('breadcrumb-div-wrapper').classList.add('hidden');
+            document.getElementById('breadcrumb-dist-wrapper').classList.add('hidden');
+
+            fetch('bgd_admin1.geojson')
+                .then(res => res.json())
+                .then(geoData => {
+                    L.geoJSON(geoData, {
+                        style: function (feature) {
+                            const name = feature.properties.adm1_name;
+                            return {
+                                fillColor: divisionColorPalette[name] || '#94a3b8',
+                                weight: 1.5,
+                                opacity: 0.8,
+                                color: '#94a3b8', // Modern clean light gray border lines
+                                fillOpacity: 0.3
+                            };
+                        },
+                        onEachFeature: function (feature, layer) {
+                            const props = feature.properties;
+                            const name = props.adm1_name;
+
+                            layer.on({
+                                mouseover: (e) => { e.target.setStyle({ fillOpacity: 0.5, weight: 2.5, color: '#64748b' }); },
+                                mouseout: (e) => { e.target.setStyle({ fillOpacity: 0.3, weight: 1.5, color: '#94a3b8' }); },
+                                click: () => {
+                                    loadDistrictLevel(name, props.center_lat, props.center_lon);
+                                }
+                            });
+
+                            const lat = parseFloat(props.center_lat);
+                            const lng = parseFloat(props.center_lon);
+
+                            if (!isNaN(lat) && !isNaN(lng)) {
+                                const count = mockProjectDatabase.divisions[name] || 0;
+                                const marker = createDataMarker(lat, lng, count, `<b>${name} Division</b><br>Total Projects: ${count}`);
+
+                                marker.on('click', () => {
+                                    loadDistrictLevel(name, lat, lng);
+                                });
+                                markerLayerGroup.addLayer(marker);
+                            }
+                        }
+                    }).addTo(geoJsonLayerGroup);
+                })
+                .catch(err => console.error("Could not render division boundaries:", err));
+        }
+
+        // --- LEVEL 2: DYNAMIC DISTRICT FILTER VIEW ---
+        function loadDistrictLevel(divisionName, divLat, divLong) {
+            markerLayerGroup.clearLayers();
+            geoJsonLayerGroup.clearLayers();
+
+            map.setView([divLat, divLong], 9);
+
+            document.getElementById('breadcrumb-div-wrapper').classList.remove('hidden');
+            const btn = document.getElementById('breadcrumb-div');
+            btn.textContent = divisionName;
+            btn.onclick = () => loadDistrictLevel(divisionName, divLat, divLong);
+            document.getElementById('breadcrumb-dist-wrapper').classList.add('hidden');
+
+            fetch('bgd_admin2.geojson')
+                .then(res => res.json())
+                .then(geoData => {
+                    const filteredFeatures = geoData.features.filter(f => f.properties.adm1_name === divisionName);
+
+                    // Fire graph processing calculation pass
+                    const adjacencyMap = computeAdjacencyMap(filteredFeatures, 'adm2_name');
+                    const assignedColorsMap = assignGraphColors(filteredFeatures, adjacencyMap, 'adm2_name');
+
+                    const filteredGeoJson = { type: "FeatureCollection", features: filteredFeatures };
+
+                    L.geoJSON(filteredGeoJson, {
+                        style: function (feature) {
+                            const dName = feature.properties.adm2_name;
+                            const colorIndex = assignedColorsMap[dName];
+
+                            // String character parsing offset base used to vary our indices evenly
+                            let nameCharSum = 0;
+                            for (let char of dName) { nameCharSum += char.charCodeAt(0); }
+
+                            const finalColorSlot = (colorIndex + nameCharSum) % dynamicDistrictColors.length;
+                            return {
+                                fillColor: dynamicDistrictColors[finalColorSlot],
+                                weight: 1.5,
+                                opacity: 0.8,
+                                color: '#f8fafc',
+                                fillOpacity: 0.4
+                            };
+                        },
+                        onEachFeature: function (feature, layer) {
+                            const props = feature.properties;
+                            const dName = props.adm2_name;
+                            const dLat = parseFloat(props.center_lat);
+                            const dLng = parseFloat(props.center_lon);
+
+                            layer.on({
+                                mouseover: (e) => { e.target.setStyle({ fillOpacity: 0.55, weight: 2.5 }); },
+                                mouseout: (e) => { e.target.setStyle({ fillOpacity: 0.40, weight: 1.5 }); },
+                                click: () => {
+                                    loadUpazilaLevel(dName, divisionName, dLat, dLng, divLat, divLong);
+                                }
+                            });
+
+                            if (!isNaN(dLat) && !isNaN(dLng)) {
+                                const count = mockProjectDatabase.districts[dName] || 0;
+                                const marker = createDataMarker(dLat, dLng, count, `<b>${dName} District</b><br>Active Projects: ${count}`);
+
+                                marker.on('click', () => {
+                                    loadUpazilaLevel(dName, divisionName, dLat, dLng, divLat, divLong);
+                                });
+                                markerLayerGroup.addLayer(marker);
+                            }
+                        }
+                    }).addTo(geoJsonLayerGroup);
+
+                    let aggregatedSum = 0;
+                    filteredFeatures.forEach(f => {
+                        aggregatedSum += (mockProjectDatabase.districts[f.properties.adm2_name] || 0);
+                    });
+                })
+                .catch(err => console.error("Could not render district boundaries:", err));
+        }
+
+        // --- LEVEL 3: DYNAMIC UPAZILA POLYGON FILTER BOUNDARY LAYER ---
+        function loadUpazilaLevel(districtName, divisionName, parentLat, parentLong, divLat, divLong) {
+            markerLayerGroup.clearLayers();
+            geoJsonLayerGroup.clearLayers();
+
+            map.setView([parentLat, parentLong], 10);
+
+            document.getElementById('breadcrumb-dist-wrapper').classList.remove('hidden');
+            document.getElementById('breadcrumb-dist').textContent = districtName;
+            document.getElementById('breadcrumb-div').onclick = () => loadDistrictLevel(divisionName, divLat, divLong);
+
+            fetch('bgd_admin3.geojson')
+                .then(res => res.json())
+                .then(geoData => {
+                    const filteredUpazilaFeatures = geoData.features.filter(f => f.properties.adm2_name === districtName);
+
+                    // Robust overlap engine pass over localized upazilas
+                    const adjacencyMap = computeAdjacencyMap(filteredUpazilaFeatures, 'adm3_name');
+                    const assignedColorsMap = assignGraphColors(filteredUpazilaFeatures, adjacencyMap, 'adm3_name');
+
+                    const filteredGeoJson = { type: "FeatureCollection", features: filteredUpazilaFeatures };
+
+                    L.geoJSON(filteredGeoJson, {
+                        style: function (feature) {
+                            const uName = feature.properties.adm3_name;
+                            const colorIndex = assignedColorsMap[uName];
+
+                            // Inject name offset base calculation to ensure rich coloring distribution
+                            let nameCharSum = 0;
+                            for (let char of uName) { nameCharSum += char.charCodeAt(0); }
+
+                            const finalColorSlot = (colorIndex + nameCharSum) % dynamicDistrictColors.length;
+                            return {
+                                fillColor: dynamicDistrictColors[finalColorSlot],
+                                weight: 1.2,
+                                opacity: 0.9,
+                                color: '#f8fafc', // Soft light gray vector outlines for sub-districts
+                                fillOpacity: 0.45
+                            };
+                        },
+                        onEachFeature: function (feature, layer) {
+                            const props = feature.properties;
+                            const uName = props.adm3_name;
+                            const uLat = parseFloat(props.center_lat);
+                            const uLng = parseFloat(props.center_lon);
+
+                            layer.on({
+                                mouseover: (e) => { e.target.setStyle({ fillOpacity: 0.65, weight: 2.2 }); },
+                                mouseout: (e) => { e.target.setStyle({ fillOpacity: 0.45, weight: 1.2 }); }
+                            });
+
+                            if (!isNaN(uLat) && !isNaN(uLng)) {
+                                const count = mockProjectDatabase.upazilas[uName] !== undefined ? mockProjectDatabase.upazilas[uName] : null;
+
+                                const tooltipText = count !== null
+                                    ? `<b>${uName} Upazila</b><br>Tracked Projects: ${count}`
+                                    : `<b>${uName} Upazila</b><br>No Metric Entry Registered`;
+
+                                const marker = createDataMarker(uLat, uLng, count, tooltipText);
+                                markerLayerGroup.addLayer(marker);
+                            }
+                        }
+                    }).addTo(geoJsonLayerGroup);
+
+                    let aggregatedSum = 0;
+                    let trackableEntriesFound = false;
+
+                    filteredUpazilaFeatures.forEach(f => {
+                        const val = mockProjectDatabase.upazilas[f.properties.adm3_name];
+                        if (val !== undefined) {
+                            aggregatedSum += val;
+                            trackableEntriesFound = true;
+                        }
+                    });
+
+                    const sidebarSumOutput = trackableEntriesFound ? aggregatedSum : "No Local Metrics";
+                })
+                .catch(err => console.error("Could not render Upazila boundaries:", err));
+        }
+
+        // --- GLOBAL INTERACTIVE METRIC BUBBLE GENERATOR ---
+        function createDataMarker(lat, lng, count, tooltipHtml) {
+            let markerColor;
+            let displayText = "";
+            let bubbleSize = 36;
+
+            if (count === null) {
+                bubbleSize = 14;
+                markerColor = '#cbd5e1'; // Fallback gray badge dot
+            } else {
+                displayText = count;
+                markerColor = count >= 150 ? '#e11d48' : (count >= 50 ? '#f59e0b' : '#10b981');
+            }
+
+            const bubbleIcon = L.divIcon({
+                html: `<div style="background-color: ${markerColor}; width: ${bubbleSize}px; height: ${bubbleSize}px;" class="project-map-bubble">${displayText}</div>`,
+                className: '',
+                iconSize: [bubbleSize, bubbleSize],
+                iconAnchor: [bubbleSize / 2, bubbleSize / 2]
+            });
+
+            return L.marker([lat, lng], { icon: bubbleIcon })
+                .bindTooltip(tooltipHtml, { sticky: false, direction: 'top' });
+        }
+
+        window.onload = initMap;
+    </script>
+</body>
+
+</html>
